@@ -8,7 +8,8 @@ header {
     margin-right: auto;
 
 }
-.titulo{
+
+.titulo {
     text-align: center;
     text-transform: uppercase;
 }
@@ -53,11 +54,13 @@ img {
     display: inline-block;
     border-radius: 15px;
     color: white;
-    
+
 }
-.entrar:hover{
+
+.entrar:hover {
     transform: scale(1.2);
 }
+
 .separar-botao {
     display: inline-block;
     margin: 20px 15px;
@@ -102,15 +105,17 @@ body {
 
 table {
     border-collapse: collapse;
-    width: 30%;
+    width: 50%;
 }
+
 th {
-    background-color:#afb4c4;
-    color: blueviolet;
+    background-color: #afb4c4;
+    color: #1c2c4c;
     width: 100%;
 }
 
-th, td {
+th,
+td {
     padding: 8px;
     text-align: left;
     border-bottom: 1px solid #ddd;

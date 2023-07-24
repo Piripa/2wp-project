@@ -3,8 +3,8 @@ import sqlite3
 
 app = Flask(__name__)
 
-def obter_dados():
-    dados = sqlite3.connect('cadeiras.db')
+def obter_dados(banco):
+    dados = sqlite3.connect(banco)
     cursor = dados.cursor()
     """
     cursor.execute("INSERT INTO cadeiras VALUES ('Sistemas Digitais','16:00')"
@@ -50,19 +50,16 @@ def aluno():
 
 @app.route("/cadeiras")
 def cadeiras():
-    dados_tabela, colunas_tabela = obter_dados()
+    dados_tabela, colunas_tabela = obter_dados('cadeiras.db')
     return render_template("cadeiras.html", dados_tabela = dados_tabela, colunas_tabela = colunas_tabela)
 
 @app.route('/cadeirasprofessor')
-def cadeiras():
-    dados_tabela, colunas_tabela = obter_dados()
+def cadeirasprofessor():
+    dados_tabela, colunas_tabela = obter_dados('testando.db')
     return render_template("cadeirasprofessor.html", dados_tabela = dados_tabela, colunas_tabela = colunas_tabela)
 
 @app.route('/frequencia')
 def frequencia():
     return render_template("frequencia.html")
-  
 
-if __name__ == "__main__":
-    app.run(debug=True)
 
