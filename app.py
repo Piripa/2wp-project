@@ -40,16 +40,14 @@ def aluno():
     return render_template("aluno.html")
 
 
-
 @app.route('/cadeirasprofessor')
-def cadeiras():
+def cadeirasprofessor():
     dados_tabela, colunas_tabela = banco_dados()
     return render_template("cadeirasprofessor.html", dados_tabela = dados_tabela, colunas_tabela = colunas_tabela)
 
 @app.route('/frequencia')
 def frequencia():
     return render_template("frequencia.html")
-
 
 
 if __name__ == "__main__":
