@@ -53,4 +53,16 @@ def cadeiras():
     dados_tabela, colunas_tabela = obter_dados()
     return render_template("cadeiras.html", dados_tabela = dados_tabela, colunas_tabela = colunas_tabela)
 
+@app.route('/cadeirasprofessor')
+def cadeiras():
+    dados_tabela, colunas_tabela = obter_dados()
+    return render_template("cadeirasprofessor.html", dados_tabela = dados_tabela, colunas_tabela = colunas_tabela)
+
+@app.route('/frequencia')
+def frequencia():
+    return render_template("frequencia.html")
+  
+
+if __name__ == "__main__":
+    app.run(debug=True)
 

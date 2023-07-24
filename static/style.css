@@ -53,9 +53,11 @@ img {
     display: inline-block;
     border-radius: 15px;
     color: white;
-
+    
 }
-
+.entrar:hover{
+    transform: scale(1.2);
+}
 .separar-botao {
     display: inline-block;
     margin: 20px 15px;
@@ -100,6 +102,11 @@ body {
 
 table {
     border-collapse: collapse;
+    width: 30%;
+}
+th {
+    background-color:#afb4c4;
+    color: blueviolet;
     width: 100%;
 }
 
@@ -112,9 +119,4 @@ th, td {
 
 tr:hover {
     background-color: #f5f5f5;
-}
-
-th {
-    background-color: #1c2c4c;
-    color: white;
 }
