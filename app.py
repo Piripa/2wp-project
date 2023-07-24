@@ -7,6 +7,9 @@ def obter_dados():
     dados = sqlite3.connect('cadeiras.db')
     cursor = dados.cursor()
     """
+    cursor.execute("CREATE TABLE cadeiras ('nomes' text varchar(40), 'horario'))"
+    """            
+    """
     cursor.execute("INSERT INTO cadeiras VALUES ('Sistemas Digitais','16:00')"
                 +"INSERT INTO cadeiras VALUES ('Calculo 1','10:00')"
                 +"INSERT INTO cadeiras VALUES ('Eletromagnetismo','14:00')"
