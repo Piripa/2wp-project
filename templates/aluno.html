@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,6 +8,7 @@
     <link rel="stylesheet" href="/static/reset.css">
     <title>Aluno</title>
 </head>
+
 <body>
     <header>
         <img class="center" src="/static/logo.png">
@@ -14,18 +16,15 @@
     <div class="center">
         <img class="distancia-top" src="/static/contato_femino.png">
         <p>Valentina Fernandes<br>Engenharia de Computação<br>UFRPE/UABJ</p>
-    <form >
-        <input type="submit" value="Cadeiras" class="separar-botao">
-        <input type="submit" value="Horarios" class="separar-botao">
+        <form action="/cadeiras">
+            <input type="submit" value="Cadeiras" class="separar-botao" name="cadeiras">
+        </form>
         <br>
-        <input type="submit" value="Configuração" class="separar-botao">
-        <input type="submit" value="A Definir" class="separar-botao">
-
-    </form>
+        <input type="submit" value="Configuração" class="separar-botao" name="config">
     </div>
     <footer id="rodape">
         <p> &copy;Powered by 2WP</p>
     </footer>
 </body>
-</html>
 
+</html>
