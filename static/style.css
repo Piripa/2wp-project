@@ -50,9 +50,11 @@ img {
     display: inline-block;
     border-radius: 15px;
     color: white;
-
+    
 }
-
+.entrar:hover{
+    transform: scale(1.2);
+}
 .separar-botao {
     display: inline-block;
     margin: 20px 15px;
@@ -91,4 +93,24 @@ body {
     background-color: #1c2c4c;
     padding: 15px 15px;
     color: white;
+}
+
+table {
+    border-collapse: collapse;
+    width: 30%;
+}
+
+th, td {
+    padding: 4px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+tr:hover {
+    background-color: red;
+}
+
+th {
+    background-color:#afb4c4;
+    color: blueviolet;
 }
