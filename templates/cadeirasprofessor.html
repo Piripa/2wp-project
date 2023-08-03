@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,19 +8,20 @@
     <link rel="stylesheet" href="/static/reset.css">
     <title>Cadeiras</title>
 </head>
+
 <body>
     <header>
         <img class="center" src="/static/logo.png">
     </header>
-    <h1> Cadeiras Cadastradas</h1>
+    <h1 class="titulo"> Cadeiras Cadastradas</h1>
     <br>
-    
-      <table>
+
+    <table>
         <thead>
             <tr>
                 {% for col in colunas_tabela %}
-                 <th>{{ col }} </th>
-                 {% endfor %}
+                <th>{{ col }} </th>
+                {% endfor %}
             </tr>
         </thead>
         <tbody>
@@ -31,11 +33,12 @@
             </tr>
             {% endfor %}
         </tbody>
-    
-      </table>
+
+    </table>
 
     <footer id="rodape">
         <p> &copy;Powered by 2WP</p>
     </footer>
 </body>
+
 </html>
