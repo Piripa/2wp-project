@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, redirect
 import sqlite3
 
 app = Flask(__name__)
@@ -6,20 +6,7 @@ app = Flask(__name__)
 def obter_dados(banco):
     dados = sqlite3.connect(banco)
     cursor = dados.cursor()
-    """
-    cursor.execute("CREATE TABLE cadeiras ('nomes' text varchar(40), 'horario'))"
-    """            
-    """
-    cursor.execute("INSERT INTO cadeiras VALUES ('Sistemas Digitais','16:00')"
-                +"INSERT INTO cadeiras VALUES ('Calculo 1','10:00')"
-                +"INSERT INTO cadeiras VALUES ('Eletromagnetismo','14:00')"
-                +"INSERT INTO cadeiras VALUES ('Fisica 2','10:00')"
-                +"INSERT INTO cadeiras VALUES ('Servomecanismo','16:00')"
-                +"INSERT INTO cadeiras VALUES ('Algoritmo','10:00')"
-                +"INSERT INTO cadeiras VALUES ('Calculo 3','8:00')"
-                +"INSERT INTO cadeiras VALUES ('Fisica 3','14:00')"
-                +"INSERT INTO cadeiras VALUES ('Redes','16:00')")
-    """
+    
     cursor.execute("SELECT * FROM cadeiras")
     dados_tabela = cursor.fetchall()
 
@@ -37,10 +24,10 @@ def home():
         senha = request.form.get("senha")
         if nome == "professor":
             #request.form["professor"]
-            return render_template("professor.html")
+            return redirect("/professor")
         elif nome == "aluno":
             #request.form["aluno"]
-            return render_template("aluno.html")
+            return redirect("/aluno")
     return render_template("index.html")
 
 @app.route("/professor")
@@ -65,4 +52,30 @@ def cadeirasprofessor():
 def frequencia():
     return render_template("frequencia.html")
 
+@app.route('/cadastrarFrequencia',methods = ['POST'])
+def cadastrarFrequencia():
+    dados = sqlite3.connect('frequencia.db')
+    cursor = dados.cursor()
+    frequencia = request.form.get('cadeira')
+    nome = request.form.get('nome')
+    matricula = request.form.get('matricula')
+    horario = request.form.get('horario')
+    verificar = f"SELECT name FROM sqlite_master WHERE type='table' AND name='{frequencia}'"
+    cursor.execute(verificar)
+    resultado = cursor.fetchone()  
+    if resultado:
+        cursor.execute('INSERT INTO {} VALUES ("{}","{}","{}");'.format(frequencia,nome,matricula,horario))
+    else:
+        cursor.execute('CREATE TABLE {} (nome TEXT NOT NULL,matricula TEXT NOT NULL,horario time);'.format(frequencia))
+        cursor.execute('INSERT INTO {} VALUES ("{}","{}","{}");'.format(frequencia,nome,matricula,horario))
+        
+    dados.commit()
+    cursor.close()
+    dados.close()
+
+    return redirect('/frequencia')
+    
+
+if __name__ in '__name__':
+    app.run(debug=True)
 
