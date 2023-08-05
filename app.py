@@ -6,7 +6,6 @@ app = Flask(__name__)
 def obter_dados(banco):
     dados = sqlite3.connect(banco)
     cursor = dados.cursor()
-    
     cursor.execute("SELECT * FROM cadeiras")
     dados_tabela = cursor.fetchall()
 
@@ -50,7 +49,14 @@ def cadeirasprofessor():
 
 @app.route('/frequencia')
 def frequencia():
-    return render_template("frequencia.html")
+    dados = sqlite3.connect('frequencia.db')
+    cursor = dados.cursor()
+    cursor.execute('SELECT * FROM Redes;')
+    frequencia = cursor.fetchall()
+    dados.commit()
+    cursor.close()
+    dados.close()
+    return render_template("frequencia.html", frequencia = frequencia)
 
 @app.route('/cadastrarFrequencia',methods = ['POST'])
 def cadastrarFrequencia():
@@ -65,16 +71,30 @@ def cadastrarFrequencia():
     resultado = cursor.fetchone()  
     if resultado:
         cursor.execute('INSERT INTO {} VALUES ("{}","{}","{}");'.format(frequencia,nome,matricula,horario))
+        print("Cadastrado aluno em uma tabela existente")
     else:
         cursor.execute('CREATE TABLE {} (nome TEXT NOT NULL,matricula TEXT NOT NULL,horario time);'.format(frequencia))
         cursor.execute('INSERT INTO {} VALUES ("{}","{}","{}");'.format(frequencia,nome,matricula,horario))
-        
+        print("Cadastrado aluno em uma tabela nova")
+    
     dados.commit()
     cursor.close()
     dados.close()
 
     return redirect('/frequencia')
-    
+
+@app.route("/excluirFrequencia", methods = ['POST'])
+def excluirFrequencia():
+    dados = sqlite3.connect('frequencia.db')
+    cursor = dados.cursor()
+    dadoId = request.form.get('dado')
+    cursor.execute(f"DELETE FROM Redes WHERE nome= '{dadoId}';")
+    print('Excluido com sucesso')
+    dados.commit()
+    cursor.close()
+    dados.close()
+    return redirect('/frequencia')  
+ 
 
 if __name__ in '__name__':
     app.run(debug=True)
