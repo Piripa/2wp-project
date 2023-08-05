@@ -3,6 +3,9 @@ import sqlite3
 
 app = Flask(__name__)
 
+#variável global
+tabela = 'Algoritmo'
+
 def obter_dados(banco):
     dados = sqlite3.connect(banco)
     cursor = dados.cursor()
@@ -49,20 +52,23 @@ def cadeirasprofessor():
 
 @app.route('/frequencia')
 def frequencia():
+    global tabela
     dados = sqlite3.connect('frequencia.db')
     cursor = dados.cursor()
-    cursor.execute('SELECT * FROM Redes;')
+    cursor.execute(f'SELECT * FROM {tabela}')
     frequencia = cursor.fetchall()
     dados.commit()
     cursor.close()
     dados.close()
-    return render_template("frequencia.html", frequencia = frequencia)
+    return render_template("frequencia.html", frequencia = frequencia, tabela = tabela) 
 
 @app.route('/cadastrarFrequencia',methods = ['POST'])
 def cadastrarFrequencia():
+    global tabela
     dados = sqlite3.connect('frequencia.db')
     cursor = dados.cursor()
     frequencia = request.form.get('cadeira')
+    tabela = frequencia
     nome = request.form.get('nome')
     matricula = request.form.get('matricula')
     horario = request.form.get('horario')
@@ -76,25 +82,27 @@ def cadastrarFrequencia():
         cursor.execute('CREATE TABLE {} (nome TEXT NOT NULL,matricula TEXT NOT NULL,horario time);'.format(frequencia))
         cursor.execute('INSERT INTO {} VALUES ("{}","{}","{}");'.format(frequencia,nome,matricula,horario))
         print("Cadastrado aluno em uma tabela nova")
-    
     dados.commit()
     cursor.close()
     dados.close()
 
     return redirect('/frequencia')
 
+def getTabela(frequencia):
+    return frequencia
+
+
 @app.route("/excluirFrequencia", methods = ['POST'])
 def excluirFrequencia():
+    global tabela
     dados = sqlite3.connect('frequencia.db')
     cursor = dados.cursor()
     dadoId = request.form.get('dado')
-    cursor.execute(f"DELETE FROM Redes WHERE nome= '{dadoId}';")
-    print('Excluido com sucesso')
+    cursor.execute(f"DELETE FROM {tabela} WHERE nome= '{dadoId}';")
     dados.commit()
     cursor.close()
     dados.close()
     return redirect('/frequencia')  
- 
 
 if __name__ in '__name__':
     app.run(debug=True)
