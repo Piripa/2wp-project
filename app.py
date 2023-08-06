@@ -3,20 +3,10 @@ import sqlite3
 
 app = Flask(__name__)
 
-def obter_dados():
-    dados = sqlite3.connect('cadeiras.db')
+def obter_dados(banco):
+    dados = sqlite3.connect(banco)
     cursor = dados.cursor()
-    """
-    cursor.execute("INSERT INTO cadeiras VALUES ('Sistemas Digitais','16:00')"
-                +"INSERT INTO cadeiras VALUES ('Calculo 1','10:00')"
-                +"INSERT INTO cadeiras VALUES ('Eletromagnetismo','14:00')"
-                +"INSERT INTO cadeiras VALUES ('Fisica 2','10:00')"
-                +"INSERT INTO cadeiras VALUES ('Servomecanismo','16:00')"
-                +"INSERT INTO cadeiras VALUES ('Algoritmo','10:00')"
-                +"INSERT INTO cadeiras VALUES ('Calculo 3','8:00')"
-                +"INSERT INTO cadeiras VALUES ('Fisica 3','14:00')"
-                +"INSERT INTO cadeiras VALUES ('Redes','16:00')")
-    """
+   
     cursor.execute("SELECT * FROM cadeiras")
     dados_tabela = cursor.fetchall()
 
@@ -26,6 +16,8 @@ def obter_dados():
     dados.close()
 
     return dados_tabela, colunas_tabela
+
+
 
 @app.route("/" , methods = ["GET","POST"])
 def home():
@@ -40,6 +32,9 @@ def home():
             return render_template("aluno.html")
     return render_template("index.html")
 
+
+
+
 @app.route("/professor")
 def professor():
     return render_template("professor.html")
@@ -51,12 +46,12 @@ def aluno():
 
 @app.route("/cadeiras")
 def cadeiras():
-    dados_tabela, colunas_tabela = obter_dados()
+    dados_tabela, colunas_tabela = obter_dados('cadeiras.db')
     return render_template("cadeiras.html", dados_tabela = dados_tabela, colunas_tabela = colunas_tabela)
 
 @app.route('/cadeirasprofessor')
 def cadeirasprofessor():
-    dados_tabela, colunas_tabela = obter_dados()
+    dados_tabela, colunas_tabela = obter_dados('testando.db')
     return render_template("cadeirasprofessor.html", dados_tabela = dados_tabela, colunas_tabela = colunas_tabela)
 
 @app.route('/frequencia')
