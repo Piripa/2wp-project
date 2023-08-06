@@ -13,11 +13,20 @@
     <header>
         <img class="center" src="/static/logo.png">
     </header>
-    <h1>FREQUÊNCIA</h1>
+    <h1 class="layoutTopo">FREQUÊNCIA</h1>
+    <div>
+        <div id="corFundo">
+            <form action="/readFrequencia" method="post" class="layoutRede">
+                <label for="tabelaFre">TABELA: </label>
+                <input type="text" name="tabelaFre" id="tabelaFre" required placeholder="Digite a  cadeira que a frequencia será acessada" >
+                <button type="submit" >ENCONTRAR</button>
+            </form>
+        </div>
+    </div>
     <div id="form_fundo">
         <h2>CADASTRANDO FREQUÊNCIA</h2>
         <div id="form_frente">
-            <form action="/cadastrarFrequencia" method="post">
+            <form action="/cadastrarFrequencia" method="post" >
                 <label for="cadeira">CADEIRA: </label>
                 <input type="text" name="cadeira" id="cadeira" required
                     placeholder="Digite a cadeira que vai cadastrar a frequencia" class="separar">
@@ -43,7 +52,7 @@
         <div class="visualFundo">
             {%if frequencia%}
             {%for i in frequencia%}
-            <form action="/excluirFrequencia" method="post">
+            <form action="/excluirFrequencia" method="post" >
                 <ul >
                     <input type="hidden" name="dado" value="{{i[0]}}">
                     <li id="atributos">NOME: {{i[0]}}</li >

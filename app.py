@@ -88,10 +88,6 @@ def cadastrarFrequencia():
 
     return redirect('/frequencia')
 
-def getTabela(frequencia):
-    return frequencia
-
-
 @app.route("/excluirFrequencia", methods = ['POST'])
 def excluirFrequencia():
     global tabela
@@ -103,6 +99,20 @@ def excluirFrequencia():
     cursor.close()
     dados.close()
     return redirect('/frequencia')  
+
+@app.route("/readFrequencia", methods = ['POST'])
+def readFrequencia():
+    global tabela
+    read = request.form.get('tabelaFre')
+    dados = sqlite3.connect('frequencia.db')
+    cursor = dados.cursor()
+    verificar = f"SELECT name FROM sqlite_master WHERE type='table' AND name='{read}'"
+    cursor.execute(verificar)
+    resultado = cursor.fetchone()
+    if  resultado:
+        tabela = read
+        redirect('/frequencia')
+    return redirect('/frequencia')
 
 if __name__ in '__name__':
     app.run(debug=True)

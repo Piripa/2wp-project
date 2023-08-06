@@ -1,6 +1,6 @@
 @import url(/static/style.css);
 
-h1{
+.layoutTopo{
     padding:  10px;
     text-align: center;
     font-size: 20px;
@@ -11,8 +11,13 @@ h1{
     border-width: 10px;
     border-color: white;
 }
-#form_frente{
 
+.layoutRede{
+    position: absolute;
+    display: inline-block;
+    margin: 1.5% 0 25% 25%;
+    background-color: #1c2c4c;
+    color: white;
 }
 
 #form_fundo
@@ -29,12 +34,11 @@ h1{
 
    
 }
-
+.form{
+    overflow-y: scroll;
+}
 .separar{
-    margin: 5px;
-    
-    
-    
+    margin: 5px;  
 }
 #btn_cadastro{
     margin: 20px;
@@ -48,7 +52,6 @@ h1{
 }
 .visualFundo{
     width: 100px;
-
     height: 200px;
     
 }
