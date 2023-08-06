@@ -125,3 +125,12 @@ td {
 tr:hover {
     background-color: #f5f5f5;
 }
+
+
+.edit:hover {
+    text-decoration: none;
+    text-align: center;
+    color: #1c2c4c;
+    font-size: large;
+    font-weight: 15px;
+}

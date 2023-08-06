@@ -1,22 +1,26 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request,redirect,flash,url_for
+from flask_sqlalchemy import SQLAlchemy
 import sqlite3
 
 app = Flask(__name__)
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///estudantes.db'
+
+db = SQLAlchemy(app)
+
+class Estudante(db.Model):
+    id = db.Column('id',db.Integer,primary_key = True,autoincrement = True)
+    nome = db.Column(db.String(150))
+    senha = db.Column(db.String(150))
+
+    def __init__(self,nome,senha):
+        self.nome = nome
+        self.senha = senha
+
+
 
 def obter_dados(banco):
     dados = sqlite3.connect(banco)
     cursor = dados.cursor()
-    """
-    cursor.execute("INSERT INTO cadeiras VALUES ('Sistemas Digitais','16:00')"
-                +"INSERT INTO cadeiras VALUES ('Calculo 1','10:00')"
-                +"INSERT INTO cadeiras VALUES ('Eletromagnetismo','14:00')"
-                +"INSERT INTO cadeiras VALUES ('Fisica 2','10:00')"
-                +"INSERT INTO cadeiras VALUES ('Servomecanismo','16:00')"
-                +"INSERT INTO cadeiras VALUES ('Algoritmo','10:00')"
-                +"INSERT INTO cadeiras VALUES ('Calculo 3','8:00')"
-                +"INSERT INTO cadeiras VALUES ('Fisica 3','14:00')"
-                +"INSERT INTO cadeiras VALUES ('Redes','16:00')")
-    """
     cursor.execute("SELECT * FROM cadeiras")
     dados_tabela = cursor.fetchall()
 
@@ -27,18 +31,21 @@ def obter_dados(banco):
 
     return dados_tabela, colunas_tabela
 
+
+
 @app.route("/" , methods = ["GET","POST"])
 def home():
+
     if request.method == "POST":
         nome = request.form.get("nome")
         senha = request.form.get("senha")
-        if nome == "professor":
-            #request.form["professor"]
+        if nome == "professor":     
             return render_template("professor.html")
         elif nome == "aluno":
-            #request.form["aluno"]
             return render_template("aluno.html")
     return render_template("index.html")
+
+
 
 @app.route("/professor")
 def professor():
@@ -61,5 +68,58 @@ def cadeirasprofessor():
 @app.route('/frequencia')
 def frequencia():
     return render_template("frequencia.html")
+
+@app.route('/register')
+def register():
+    db.create_all()
+    estudantes = Estudante.query.all()
+    return render_template("register.html", estudantes = estudantes)
+
+@app.route('/add', methods = ["GET","POST"])
+def add():
+    if request.method== "POST":
+        estudante = Estudante(request.form['nome'],request.form['senha'])
+        db.session.add(estudante)
+        db.session.commit()
+        return redirect(url_for('register'))
+    return render_template("add.html")
+
+
+@app.route('/edit/<int:id>', methods = ["GET", "POST"])
+def edit(id):
+    estudante = Estudante.query.get(id)
+    if request.method == "POST":
+        estudante.nome = request.form['nome']
+        estudante.senha = request.form['senha']
+        db.session.commit()
+        return redirect(url_for('register'))
+    return render_template("edit.html", estudante = estudante)
+
+
+@app.route('/delete/<int:id>', methods = ["GET", "POST"])
+def delete(id):
+    estudante =Estudante.query.get(id)
+    db.session.delete(estudante)
+    db.session.commit()
+
+    return redirect(url_for('register'))
+
+
+
+
+
+
+
+
+
+@app.route('/login')
+def login():
+    return render_template("login.html")
+
+if __name__ =="__main__":
+    
+    app.run(debug=True)
+
+
 
 

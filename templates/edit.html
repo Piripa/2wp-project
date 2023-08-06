@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/style.css">
+    <link rel="stylesheet" href="/static/reset.css">
+    <title>Editar</title>
+</head>
+<body>
+    <header> <img class="center" src="/static/logo.png"></header>
+    <h1 class="bem-vindo"> Editar {{estudante.nome}}</h1>
+    <form action="/edit/{{estudante.id}}" class="form" method="post">
+        <div class="row">
+            <div class="col-md-6">
+                <input type="text" name="nome" id="nome" placeholder="nome" value="{{estudante.nome}}">
+
+            </div>
+            <div class="col-md-6">
+                <input type="text" name="senha" id="senha" placeholder="senha" value="{{estudante.senha}}">
+            </div>
+        </div>
+        <br>
+        <div class=" row col-xs-12">
+            <button type="submit" class="btn btn-block btn-sucess">Enviar</button>
+
+        </div>
+    </form>
+    <footer id="rodape">
+        <p> &copy;Powered by 2WP</p>
+    </footer>
+</body>
+</html>
