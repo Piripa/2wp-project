@@ -16,7 +16,8 @@ class Estudante(db.Model):
         self.nome = nome
         self.senha = senha
 
-
+#variável global
+tabela = 'Algoritmo'
 
 def obter_dados(banco):
     dados = sqlite3.connect(banco)
@@ -31,21 +32,19 @@ def obter_dados(banco):
 
     return dados_tabela, colunas_tabela
 
-
-
 @app.route("/" , methods = ["GET","POST"])
 def home():
 
     if request.method == "POST":
         nome = request.form.get("nome")
         senha = request.form.get("senha")
-        if nome == "professor":     
-            return render_template("professor.html")
+        if nome == "professor":
+            #request.form["professor"]
+            return redirect("/professor")
         elif nome == "aluno":
-            return render_template("aluno.html")
+            #request.form["aluno"]
+            return redirect("/aluno")
     return render_template("index.html")
-
-
 
 @app.route("/professor")
 def professor():
@@ -67,7 +66,16 @@ def cadeirasprofessor():
 
 @app.route('/frequencia')
 def frequencia():
-    return render_template("frequencia.html")
+    global tabela
+    dados = sqlite3.connect('frequencia.db')
+    cursor = dados.cursor()
+    cursor.execute(f'SELECT * FROM {tabela}')
+    frequencia = cursor.fetchall()
+    dados.commit()
+    cursor.close()
+    dados.close()
+    return render_template("frequencia.html", frequencia = frequencia, tabela = tabela) 
+
 
 @app.route('/register')
 def register():
@@ -104,22 +112,62 @@ def delete(id):
 
     return redirect(url_for('register'))
 
-
-
-
-
-
-
-
-
 @app.route('/login')
 def login():
     return render_template("login.html")
 
-if __name__ =="__main__":
-    
+@app.route('/cadastrarFrequencia',methods = ['POST'])
+def cadastrarFrequencia():
+    global tabela
+    dados = sqlite3.connect('frequencia.db')
+    cursor = dados.cursor()
+    frequencia = request.form.get('cadeira')
+    tabela = frequencia
+    nome = request.form.get('nome')
+    matricula = request.form.get('matricula')
+    horario = request.form.get('horario')
+    verificar = f"SELECT name FROM sqlite_master WHERE type='table' AND name='{frequencia}'"
+    cursor.execute(verificar)
+    resultado = cursor.fetchone()  
+    if resultado:
+        cursor.execute('INSERT INTO {} VALUES ("{}","{}","{}");'.format(frequencia,nome,matricula,horario))
+        print("Cadastrado aluno em uma tabela existente")
+    else:
+        cursor.execute('CREATE TABLE {} (nome TEXT NOT NULL,matricula TEXT NOT NULL,horario time);'.format(frequencia))
+        cursor.execute('INSERT INTO {} VALUES ("{}","{}","{}");'.format(frequencia,nome,matricula,horario))
+        print("Cadastrado aluno em uma tabela nova")
+    dados.commit()
+    cursor.close()
+    dados.close()
+
+    return redirect('/frequencia')
+
+@app.route("/excluirFrequencia", methods = ['POST'])
+def excluirFrequencia():
+    global tabela
+    dados = sqlite3.connect('frequencia.db')
+    cursor = dados.cursor()
+    dadoId = request.form.get('dado')
+    cursor.execute(f"DELETE FROM {tabela} WHERE nome= '{dadoId}';")
+    dados.commit()
+    cursor.close()
+    dados.close()
+    return redirect('/frequencia')  
+
+@app.route("/readFrequencia", methods = ['POST'])
+def readFrequencia():
+    global tabela
+    read = request.form.get('tabelaFre')
+    dados = sqlite3.connect('frequencia.db')
+    cursor = dados.cursor()
+    verificar = f"SELECT name FROM sqlite_master WHERE type='table' AND name='{read}'"
+    cursor.execute(verificar)
+    resultado = cursor.fetchone()
+    if  resultado:
+        tabela = read
+        redirect('/frequencia')
+    return redirect('/frequencia')
+
+if __name__ in '__name__':
     app.run(debug=True)
-
-
-
 
