@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/cadFrequencia.css">
+    <title>Cadastro da Frequencia</title>
+</head>
+<body>
+<header>
+    <img class="center" src="/static/logo.png">
+</header>
+    <div id="form_fundo">
+        <h2>CADASTRANDO FREQUÊNCIA</h2>
+        <div id="form_frente">
+            <form action="/cadastrarFrequencia" method="post" >
+                <label for="cadeira">CADEIRA: </label>
+                <input type="text" name="cadeira" id="cadeira" required
+                    placeholder="Digite a cadeira que vai cadastrar a frequencia" class="separar">
+                <br>
+                <label for="nome ">NOME: </label>
+                <input type="text" name="nome" id="nome" required placeholder="Digite o nome do aluno" class="separar">
+                <br>
+                <label for="matricula ">MATRICULA: </label>
+                <input type="text" name="matricula" id="matricula" required placeholder="Digite a matricula do aluno"
+                    class="separar">
+                <br>
+                <label for="horario ">HORARIO:</label>
+                <input type="text" name="horario" id="horario" placeholder="Digite o horario da frequencia"
+                    class="separar">
+                <br>
+                <button type="submit" id="btn_cadastro" >CADASTRAR </button >
+            </form>
+        </div>
+    </div>
+<footer id="rodape">
+    <p> &copy;Powered by 2WP</p>
+</footer>
+</body>
+</html>

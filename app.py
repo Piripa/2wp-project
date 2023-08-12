@@ -1,11 +1,13 @@
 from flask import Flask, render_template, request,redirect,flash,url_for
 from flask_sqlalchemy import SQLAlchemy
 import sqlite3
-
+import pandas as pd
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///estudantes.db'
 
 db = SQLAlchemy(app)
+
+
 
 class Estudante(db.Model):
     id = db.Column('id',db.Integer,primary_key = True,autoincrement = True)
@@ -72,10 +74,12 @@ def frequencia():
     cursor.execute(f'SELECT * FROM {tabela}')
     frequencia = cursor.fetchall()
     dados.commit()
+    #data = ["Item 1", "Item 2", "Item 3", "Item 4"]
+    cursor.execute("SELECT name FROM sqlite_master WHERE type='table';")
+    data = cursor.fetchall()
     cursor.close()
     dados.close()
-    return render_template("frequencia.html", frequencia = frequencia, tabela = tabela) 
-
+    return render_template("frequencia.html", frequencia = frequencia, data = data) 
 
 @app.route('/register')
 def register():
@@ -139,7 +143,6 @@ def cadastrarFrequencia():
     dados.commit()
     cursor.close()
     dados.close()
-
     return redirect('/frequencia')
 
 @app.route("/excluirFrequencia", methods = ['POST'])
@@ -154,19 +157,10 @@ def excluirFrequencia():
     dados.close()
     return redirect('/frequencia')  
 
-@app.route("/readFrequencia", methods = ['POST'])
-def readFrequencia():
-    global tabela
-    read = request.form.get('tabelaFre')
-    dados = sqlite3.connect('frequencia.db')
-    cursor = dados.cursor()
-    verificar = f"SELECT name FROM sqlite_master WHERE type='table' AND name='{read}'"
-    cursor.execute(verificar)
-    resultado = cursor.fetchone()
-    if  resultado:
-        tabela = read
-        redirect('/frequencia')
-    return redirect('/frequencia')
+@app.route("/paginaCadFreq", methods= ['POST'])
+def paginaCadFreq():
+   return render_template("cadastrarFrequencia.html")
+
 
 if __name__ in '__name__':
     app.run(debug=True)
