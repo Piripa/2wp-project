@@ -16,11 +16,11 @@
     <h1 class="layoutTopo">FREQUÊNCIA</h1>
     <div>
         <form action="#" method="post">
-            {% for item in data %}
+            {% for item in list_table %}
                 <label>
-                    <input type="checkbox" name="items" value="{{ item }}">
-                    {{ item }}
-                </label><br>
+                    <input type="checkbox" name="items" value="{{item}}">
+                    {{item}}
+                </label>
             {% endfor %}
             <button type="submit">Submit</button>
         </form>

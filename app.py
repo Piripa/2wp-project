@@ -75,11 +75,14 @@ def frequencia():
     frequencia = cursor.fetchall()
     dados.commit()
     #data = ["Item 1", "Item 2", "Item 3", "Item 4"]
-    cursor.execute("SELECT name FROM sqlite_master WHERE type='table';")
-    data = cursor.fetchall()
+    query = "SELECT name FROM sqlite_master WHERE type='table';"
+    data = pd.read_sql(query,dados)
+    list_table = []
+    for coluna in data.columns:
+        list_table = data[coluna].tolist()
     cursor.close()
     dados.close()
-    return render_template("frequencia.html", frequencia = frequencia, data = data) 
+    return render_template("frequencia.html", frequencia = frequencia, list_table = list_table) 
 
 @app.route('/register')
 def register():
