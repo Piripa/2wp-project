@@ -1,20 +1,22 @@
 from flask import Flask, render_template, request,redirect,flash,url_for
 from flask_sqlalchemy import SQLAlchemy
 import sqlite3
-
+from flask_login import UserMixin
+from func.funcoes import criptografar_senha, comparar_senhas
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///estudantes.db'
 
 db = SQLAlchemy(app)
 
-class Estudante(db.Model):
+class Estudante(db.Model,UserMixin):
     id = db.Column('id',db.Integer,primary_key = True,autoincrement = True)
-    nome = db.Column(db.String(150))
+    nome = db.Column(db.String(150), unique = True)
     senha = db.Column(db.String(150))
 
     def __init__(self,nome,senha):
         self.nome = nome
         self.senha = senha
+
 
 #variável global
 tabela = 'Algoritmo'
@@ -34,17 +36,25 @@ def obter_dados(banco):
 
 @app.route("/" , methods = ["GET","POST"])
 def home():
-
+    error = None
     if request.method == "POST":
-        nome = request.form.get("nome")
-        senha = request.form.get("senha")
-        if nome == "professor":
-            #request.form["professor"]
-            return redirect("/professor")
-        elif nome == "aluno":
-            #request.form["aluno"]
-            return redirect("/aluno")
-    return render_template("index.html")
+        username = request.form.get("username")
+        password = request.form.get("password")
+    
+        
+        login = Estudante.query.filter_by(nome=username).first()
+        if login:
+            if comparar_senhas(login.senha, password):
+                return redirect('/professor')
+            else:
+                error = 'Usuário ou senha incorretos'
+                return render_template('index.html', error=error)
+        else:
+            error = 'Usuário não cadastrado'
+            return render_template('index.html', error=error)
+    else:
+        return render_template('index.html', error=error)
+        
 
 @app.route("/professor")
 def professor():
@@ -77,11 +87,17 @@ def frequencia():
     return render_template("frequencia.html", frequencia = frequencia, tabela = tabela) 
 
 
-@app.route('/register')
+@app.route('/register', methods = ["GET","POST"])
 def register():
-    db.create_all()
-    estudantes = Estudante.query.all()
-    return render_template("register.html", estudantes = estudantes)
+    if request.method == "POST":
+        username = request.form.get("username", False)
+        password = request.form.get("password", False)
+        estudante = Estudante(username,password)
+        db.session.add(estudante)
+        db.session.commit()
+        return redirect("/")
+    else:
+        return render_template("register.html")
 
 @app.route('/add', methods = ["GET","POST"])
 def add():
