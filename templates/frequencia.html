@@ -22,17 +22,22 @@
                 {{resultado}}
             </label>
             {% endfor %}
-            <button type="submit" class="pesquisa">Pesquisa</button>
+            <button type="submit" class="entrar">Pesquisa</button>
+        </form>
+    </div>
+    <div>
+        <form action="/paginaCadCadeiras" method="post">
+            <button type="submit" class="cadFreque">CADASTRAR CADEIRA</button>
         </form>
     </div>
     <div>
         <form action="/paginaCadFreq" method="post">
-            <button type="submit" class="cadFreque">CADASTRAR ALUNO NA FREQUÊNCIA</button>
+            <button type="submit">CADASTRAR ALUNOS</button>
         </form>
     </div>
 
     <div id="form_fundo_visual">
-        <h2 id="atributos" class="visu">Frequencia da cadeira : {{tabela}}</h2>
+        <h2 id="atributos" class="visu">{{tabela}}</h2>
         <div class="visualFundo">
             {%if frequencia%}
             {%for i in frequencia%}
@@ -43,7 +48,7 @@
                     <li id="atributos">MATRICULA: {{i[1]}}</li>
                     <li id="atributos">HORARIO: {{i[2]}}</li>
                 </ul>
-                <button type="submit" class="entrar">EXCLUIR</button>
+                <button type="submit" class="excluir">EXCLUIR</button>
             </form>
             {%endfor%}
             {%else%}

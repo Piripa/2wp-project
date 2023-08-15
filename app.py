@@ -123,7 +123,7 @@ def delete(id):
 def login():
     return render_template("login.html")
 
-@app.route('/cadastrarFrequencia',methods = ['POST'])
+@app.route('/cadastrarCadeira',methods = ['POST'])
 def cadastrarFrequencia():
     global tabela
     dados = sqlite3.connect('frequencia.db')
@@ -160,9 +160,26 @@ def excluirFrequencia():
     dados.close()
     return redirect('/frequencia')  
 
+@app.route("/paginaCadCadeiras", methods= ['POST'])
+def paginaCadCadeiras():
+   return render_template("cadastrarCadeira.html")
+
 @app.route("/paginaCadFreq", methods= ['POST'])
 def paginaCadFreq():
-   return render_template("cadastrarFrequencia.html")
+   dados = sqlite3.connect('frequencia.db')
+   cursor = dados.cursor()
+   cursor.execute(f"SELECT * FROM {tabela};")
+   alunos = cursor.fetchall()
+   dados.commit()
+   query = "SELECT name FROM sqlite_master WHERE type='table';"
+   data = pd.read_sql(query,dados)
+   list_table = []
+   for coluna in data.columns:
+       list_table = data[coluna].tolist()
+   list_table.remove('sqlite_sequence')
+   cursor.close()
+   dados.close
+   return render_template("cadastroFrequencia.html", list_table = list_table, alunos = alunos)
 
 @app.route("/selecionarTabela", methods = ['POST'])
 def selecionarTabela():
@@ -170,6 +187,23 @@ def selecionarTabela():
     pesquisar = request.form.get('nome')
     tabela = pesquisar
     return redirect('/frequencia')
+
+@app.route("/combobox", methods = ['POST'])
+def checkbox():
+    global tabela
+    pesquisar = request.form.get('acessoTabela')
+    tabela = pesquisar
+    return redirect('/paginaCadFreq')
+
+@app.route("/presenca", methods = ['POST'])
+def presenca():
+    global tabela
+    return redirect('/paginaCadFreq')
+
+
+
+
+
 
 
 if __name__ in '__name__':
