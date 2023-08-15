@@ -14,36 +14,36 @@
         <img class="center" src="/static/logo.png">
     </header>
     <h1 class="layoutTopo">FREQUÊNCIA</h1>
-    <div>
-        <form action="#" method="post">
-            {% for item in list_table %}
-                <label>
-                    <input type="checkbox" name="items" value="{{item}}">
-                    {{item}}
-                </label>
+    <div class="selecionarTabela">
+        <form action="/selecionarTabela" method="post">
+            {% for resultado in list_table %}
+            <label>
+                <input type="checkbox" name="nome" value="{{resultado}}">
+                {{resultado}}
+            </label>
             {% endfor %}
-            <button type="submit">Submit</button>
+            <button type="submit" class="pesquisa">Pesquisa</button>
         </form>
     </div>
     <div>
         <form action="/paginaCadFreq" method="post">
-            <button type="submit">CADASTRAR FREQUENCIA</button>
+            <button type="submit" class="cadFreque">CADASTRAR ALUNO NA FREQUÊNCIA</button>
         </form>
     </div>
-    
+
     <div id="form_fundo_visual">
         <h2 id="atributos" class="visu">Frequencia da cadeira : {{tabela}}</h2>
         <div class="visualFundo">
             {%if frequencia%}
             {%for i in frequencia%}
-            <form action="/excluirFrequencia" method="post" >
-                <ul >
+            <form action="/excluirFrequencia" method="post">
+                <ul>
                     <input type="hidden" name="dado" value="{{i[0]}}">
-                    <li id="atributos">NOME: {{i[0]}}</li >
+                    <li id="atributos">NOME: {{i[0]}}</li>
                     <li id="atributos">MATRICULA: {{i[1]}}</li>
                     <li id="atributos">HORARIO: {{i[2]}}</li>
                 </ul>
-                <button type="submit" class="btn-excluir">EXCLUIR</button>
+                <button type="submit" class="entrar">EXCLUIR</button>
             </form>
             {%endfor%}
             {%else%}

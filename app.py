@@ -7,8 +7,6 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///estudantes.db'
 
 db = SQLAlchemy(app)
 
-
-
 class Estudante(db.Model):
     id = db.Column('id',db.Integer,primary_key = True,autoincrement = True)
     nome = db.Column(db.String(150))
@@ -18,8 +16,9 @@ class Estudante(db.Model):
         self.nome = nome
         self.senha = senha
 
-#variável global
+#variável global##################
 tabela = 'Algoritmo'
+##################################
 
 def obter_dados(banco):
     dados = sqlite3.connect(banco)
@@ -74,15 +73,16 @@ def frequencia():
     cursor.execute(f'SELECT * FROM {tabela}')
     frequencia = cursor.fetchall()
     dados.commit()
-    #data = ["Item 1", "Item 2", "Item 3", "Item 4"]
     query = "SELECT name FROM sqlite_master WHERE type='table';"
     data = pd.read_sql(query,dados)
     list_table = []
     for coluna in data.columns:
         list_table = data[coluna].tolist()
+    #retirando a tabela que é criada automaticamente pelo browser sqlite3
+    list_table.remove('sqlite_sequence')
     cursor.close()
     dados.close()
-    return render_template("frequencia.html", frequencia = frequencia, list_table = list_table) 
+    return render_template("frequencia.html", frequencia = frequencia, list_table = list_table, tabela = tabela) 
 
 @app.route('/register')
 def register():
@@ -163,6 +163,13 @@ def excluirFrequencia():
 @app.route("/paginaCadFreq", methods= ['POST'])
 def paginaCadFreq():
    return render_template("cadastrarFrequencia.html")
+
+@app.route("/selecionarTabela", methods = ['POST'])
+def selecionarTabela():
+    global tabela
+    pesquisar = request.form.get('nome')
+    tabela = pesquisar
+    return redirect('/frequencia')
 
 
 if __name__ in '__name__':

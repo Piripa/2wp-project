@@ -40,12 +40,17 @@ img {
 
 .texto {
     margin: 20px;
-    background-color: #afb4c4;
-    border-top: none;
-    border-left: none;
-    border-right: none;
+    border: none;
+    border-bottom: 1px solid black;
+    background-color: transparent;
 
 }
+
+.texto:focus {
+    outline: none;
+    background: none;
+}
+
 
 
 .entrar {
@@ -72,20 +77,15 @@ img {
     font-weight: bold;
 }
 
-.separar-botao:hover,
-img:hover {
-    transform: scale(1.2);
-}
-
 div {
-    display: inline;
     text-align: center;
     margin: 15px 15px;
 }
 
 body {
-    background-color: #afb4c4;
-    overflow: hidden;
+    background-color: white;
+    overflow-x: hidden;
+    
 }
 
 .escolha {

@@ -1,2 +1,30 @@
 @import url(/static/style.css);
 @import url(/static/reset.css);
+
+#cadastro{
+    height: 79vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 10px;
+}
+#cadastro h2{
+    font-size: 30px;
+    font-weight: bold;
+    
+}
+
+
+#form_frente form{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+
+}
+.entrar{
+    margin-top: 5px;
+}
+
+
