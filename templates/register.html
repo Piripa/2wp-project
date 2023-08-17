@@ -12,41 +12,33 @@
         <img class="center" src="/static/logo.png">
     </header>
     <div class="container">
-        <div class="table">
-            <div class="col-xs-12">
-                <a href="/add" class="edit">Adicionar Usuario</a>
-            </div>
             <br>
-            <div class="col-xs-12">
-                <table class="table">
-                    <thead>
-                      <tr>
-                        <th>nome</th>
-                        <th>senha</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                        {% for e in estudantes %}
-                        <tr>
-                            <td>{{e.nome}}</td>
-                            <td>{{e.senha}}</td>
-                            <td>
-                                <a href="/edit/{{e.id}}" class="edit">Editar</a> |
-                                <a href="/delete/{{e.id}}" class="edit">Excluir</a>
-                            </td>
-                        </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
-    {% for e in estudantes%}
-    <br>
-    {% endfor%}
+                <div class="login">
+                    <p>Preencha os campos a seguir</p>
+                    <form class="form" method="post">
+                    {{ form.hidden_tag() }}
+                    {{ form.username }}
+                    {{ form.password }}
+                    {{ form.submit }}
+                    </form>
+                </div>
+              
         <form action="/"><button class="entrar"> Clique aqui para voltar para a tela inicial</button></form>
     <footer id="rodape">
         <p> &copy;Powered by 2WP</p>
     </footer>
 </body>
 </html>
+
+
+
+
+<!-- <label for="username">Username:</label>
+                        <input type="text" id="username" name="username" class="texto" required><br>
+                        
+                        <label for="password">Senha:</label>
+                        <input type="password" id="password" name="password" class="texto" required placeholder="********"><br>
+
+                        <label for="pessoa">Pessoa</label>
+                        <input type="text" id="pessoa" name="pessoa"  class="texto" placeholder="Professor/Aluno" required><br>
+                        <input type="submit" class="entrar" value="Cadastrar"> -->
