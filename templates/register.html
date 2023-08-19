@@ -13,21 +13,42 @@
     </header>
     <div class="container">
             <br>
+            {% with messages = get_flashed_messages(category_filter=["error"]) %}
+            {% if messages %}
+                <div class="flash-message error">
+                    {{ messages[0] }}
+                </div>
+            {% endif %}
+        {% endwith %}
+        
+        <!-- Se houver mensagens flash de sucesso -->
+        {% with messages = get_flashed_messages(category_filter=["success"]) %}
+            {% if messages %}
+                <div class="flash-message success">
+                    {{ messages[0]}}
+                </div>
+            {% endif %}
+        {% endwith %}
+
                 <div class="login">
                     <p>Preencha os campos a seguir</p>
                     <form class="form" method="POST">
                         <label for="username">Username:</label>
-                        <input type="text" id="username" name="username" required placeholder="Nome Usuário"><br>
+                        <input type="text" id="username"  class="texto" name="username" required placeholder="Nome Usuário"><br>
 
                         <label for="password">Senha:</label>
-                        <input type="password" id="password" name="password" required placeholder="Senha"><br>
+                        <input type="password" id="password" class="texto" name="password" required placeholder="Senha"><br>
 
-                        <!-- <label for="tipo_pessoa">Tipo Usuário</label>
-                        <input type="text" id ="tipo_pessoa" name="tipo_pessoa" required placeholder="Aluno/Professor"><br> -->
+                        <label for="user">Tipo Usuário</label>
+                        <input type="text" id ="user"  class = "texto"  name="user" required placeholder="Aluno/Professor">
+                        <br>
+
                         <input type="submit" class="entrar" value="Cadastrar">
                     </form>
-
-        <form action="/"><button class="entrar"> Clique aqui para voltar para a tela inicial</button></form>
+        <div>
+            <form action="/"><button class="entrar"> Clique aqui para voltar para a tela inicial</button></form>
+        </div>
+        
     <footer id="rodape">
         <p> &copy;Powered by 2WP</p>
     </footer>

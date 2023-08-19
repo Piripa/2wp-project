@@ -8,6 +8,7 @@ from passlib.hash import sha256_crypt
 
 
 app = Flask(__name__)
+app.secret_key = 'ola'
 # def create_table():
 #     conn = sqlite3.connect('login.db')
 #     c = conn.cursor()
@@ -43,13 +44,17 @@ def home():
         conn = sqlite3.connect('login.db')
         c = conn.cursor()
         c.execute("SELECT * FROM login WHERE username = ?" , (username,))
-        print(password)
-        print(username)
         data = c.fetchone()
         conn.close()
         if data:
-            if sha256_crypt.verify(password,data[1]):
-                return render_template("/professor.html")
+            stored_password = data[1]
+            user = data[2]
+
+            if sha256_crypt.verify(password,stored_password):
+                if user =='professor':
+                    return render_template("/professor.html")
+                elif user == 'aluno':
+                    return render_template("/aluno.html")
             
     return render_template("/index.html")
 
@@ -91,11 +96,23 @@ def register():
     if request.method == "POST":
         username = request.form.get('username')
         password = sha256_crypt.hash(request.form.get('password'))
+        user = request.form.get('user')
         conn = sqlite3.connect('login.db')
         c = conn.cursor()
-        c.execute("INSERT INTO login (username, password) VALUES (?, ?)", (username, password))
+
+        #Procura se existe algum usuário já cadastrado no BD
+        c.execute("SELECT * FROM login WHERE username = ?", (username,))
+        existing_user = c.fetchone()
+        if existing_user:
+            conn.close()
+            flash("Usuário já existente", "error")
+            return render_template("register.html")
+        
+        #Caso não exista, ele adiciona
+        c.execute("INSERT INTO login (username, password, user) VALUES (?, ?, ?)", (username, password, user))
         conn.commit()
         conn.close()
+        flash("Cadastro Realizado com Sucesso", "success")
     return render_template("register.html")
 
 
