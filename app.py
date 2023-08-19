@@ -2,6 +2,7 @@ from flask import Flask, render_template, request,redirect,flash,url_for
 from flask_sqlalchemy import SQLAlchemy
 import sqlite3
 import pandas as pd
+from datetime import date
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///estudantes.db'
 
@@ -19,6 +20,10 @@ class Estudante(db.Model):
 #variável global##################
 tabela = 'Algoritmo'
 ##################################
+def data():
+    data_atual = date.today()
+    dataTexto = data_atual.strftime('%d_%m_%Y')
+    return dataTexto
 
 def obter_dados(banco):
     dados = sqlite3.connect(banco)
@@ -164,13 +169,19 @@ def excluirFrequencia():
 def paginaCadCadeiras():
    return render_template("cadastrarCadeira.html")
 
-@app.route("/paginaCadFreq", methods= ['POST'])
+@app.route("/irPageCadFreq", methods =['POST'])
+def irPageCadFreq():
+    return redirect('/frequencia')
+
+@app.route("/paginaCadFreq")
 def paginaCadFreq():
+   global tabela
    dados = sqlite3.connect('frequencia.db')
    cursor = dados.cursor()
    cursor.execute(f"SELECT * FROM {tabela};")
    alunos = cursor.fetchall()
    dados.commit()
+   #-------------------Abaixo: Lendo nomes das tabelas-------------------
    query = "SELECT name FROM sqlite_master WHERE type='table';"
    data = pd.read_sql(query,dados)
    list_table = []
@@ -188,17 +199,40 @@ def selecionarTabela():
     tabela = pesquisar
     return redirect('/frequencia')
 
-@app.route("/combobox", methods = ['POST'])
-def checkbox():
+@app.route("/combobox", methods = ['GET','POST'])
+def combobox():
     global tabela
     pesquisar = request.form.get('acessoTabela')
     tabela = pesquisar
     return redirect('/paginaCadFreq')
 
-@app.route("/presenca", methods = ['POST'])
+@app.route("/presenca", methods = ['GET','POST'])
 def presenca():
     global tabela
+    if request.method== "POST":
+        list_presenca_comp = request.form.getlist('presente')
+        auxiliar = ''
+        list_presenca = []
+        for i in list_presenca_comp:
+            auxiliar = i
+            list_presenca.append(auxiliar.split())
+        print(list_presenca)
+        dados = sqlite3.connect('presenca.db')
+        cursor = dados.cursor()
+        tabela_for_frequencia = tabela+"_"+data()
+        cursor.execute('CREATE TABLE IF NOT EXISTS {} (nome TEXT NOT NULL, matricula TEXT NOT NULL, presenca TEXT);'.format(tabela_for_frequencia))
+        for i in list_presenca:
+            nome = i[0]
+            matricula = i[1]
+            estar_presente = i[3]
+            cursor.execute(f"INSERT INTO {tabela_for_frequencia} VALUES ('{nome}','{matricula}','{estar_presente}')")
+        dados.commit()
+        cursor.close()
+        dados.close()
     return redirect('/paginaCadFreq')
+
+
+
 
 
 
