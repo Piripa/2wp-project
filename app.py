@@ -133,7 +133,7 @@ def cadastrarFrequencia():
     global tabela
     dados = sqlite3.connect('frequencia.db')
     cursor = dados.cursor()
-    frequencia = request.form.get('cadeira')
+    frequencia = request.form.get('acessoTabela')
     tabela = frequencia
     nome = request.form.get('nome')
     matricula = request.form.get('matricula')
@@ -167,11 +167,26 @@ def excluirFrequencia():
 
 @app.route("/paginaCadCadeiras", methods= ['POST'])
 def paginaCadCadeiras():
-   return render_template("cadastrarCadeira.html")
+    global tabela
+    dados = sqlite3.connect('frequencia.db')
+    cursor = dados.cursor()
+    cursor.execute(f'SELECT * FROM {tabela}')
+    frequencia = cursor.fetchall()
+    dados.commit()
+    query = "SELECT name FROM sqlite_master WHERE type='table';"
+    data = pd.read_sql(query,dados)
+    list_table = []
+    for coluna in data.columns:
+        list_table = data[coluna].tolist()
+    #retirando a tabela que é criada automaticamente pelo browser sqlite3
+    list_table.remove('sqlite_sequence')
+    cursor.close()
+    dados.close()
+    return render_template("cadastrarCadeira.html", list_table=list_table)
 
-@app.route("/irPageCadFreq", methods =['POST'])
-def irPageCadFreq():
-    return redirect('/frequencia')
+# @app.route("/irPageCadFreq", methods =['POST'])
+# def irPageCadFreq():
+#     return redirect('/frequencia')
 
 @app.route("/paginaCadFreq")
 def paginaCadFreq():
@@ -229,16 +244,7 @@ def presenca():
         dados.commit()
         cursor.close()
         dados.close()
-    return redirect('/paginaCadFreq')
-
-
-
-
-
-
-
-
-
+    return redirect('/frequencia')
 
 if __name__ in '__name__':
     app.run(debug=True)

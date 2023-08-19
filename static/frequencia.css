@@ -1,5 +1,5 @@
 @import url(/static/style.css);
-/*
+
 .layoutTopo {
     padding: 10px;
     text-align: center;
@@ -14,12 +14,13 @@
 
 }
 
+
 .cadFreque {
     display: block;
     position: absolute;
     width: 200px;
-    height: 200px;
-    margin: 10px 100% 0 0;
+    height: 100px;
+    margin: 1px 100% 0 0;
     background-color: #1c2c4c;
     color: white;
     font-size: 25px;
@@ -30,11 +31,28 @@
 .cadFreque:hover {
     transform: scale(1.1)
 }
+.cadAlunos{
+    display: block;
+    position: absolute;
+    width: 200px;
+    height: 100px;
+    margin: 7% 100% 0 0;;
+    background-color: #1c2c4c;
+    color: white;
+    font-size: 25px;
+    font-weight: bold;
+    border-radius: 5px;
+
+}
+.cadAlunos:hover {
+    transform: scale(1.1)
+}
+
 
 .selecionarTabela form {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
     flex-direction: column;
     background-color: #1c2c4c;
     color: white;
@@ -51,8 +69,8 @@
     display: inline-block;
     position: relative;
     display: inline-block;
-    margin: -18.5% 2% 5% 17%;
-    width: 1250px;
+    margin: -19% 2% 5% 17%;
+    width: 80%;
     height: 469px;
     background-color: #1c2c4c;
     color: white;
@@ -90,4 +108,4 @@
 .excluir:hover{
     transform: scale(1.2);
 
-} */
+} 

@@ -30,5 +30,13 @@
 .entrar{
     margin-top: 5px;
 }
+.nomeTabelas{
+    padding: 2px 45px;
+    background-color: white;
+    color: #1c2c4c;
+    font-size: 10px;
+    font-weight: bold;
+    
+}
 
 

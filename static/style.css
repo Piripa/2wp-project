@@ -1,136 +1,140 @@
-header {
-    background-color: #1c2c4c;
-}
+ * {
+     font-family: 'Times New Roman', Times, serif;
+ }
 
-.center {
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
+ header {
+     background-color: #1c2c4c;
+ }
 
-}
+ .center {
+     display: block;
+     margin-left: auto;
+     margin-right: auto;
 
-.titulo {
-    text-align: center;
-    text-transform: uppercase;
-}
+ }
 
-img {
+ .titulo {
+     text-align: center;
+     text-transform: uppercase;
+ }
 
-    max-width: 200px;
-    max-height: 150px;
-    width: auto;
-    height: auto;
-    /*Tira o fundo da img*/
-    /*mix-blend-mode: multiply;*/
-}
+ img {
 
-.bem-vindo {
-    padding: 50px 15px;
-    font-size: 30px;
-    font-weight: bold;
-}
+     max-width: 200px;
+     max-height: 150px;
+     width: auto;
+     height: auto;
+     /*Tira o fundo da img*/
+     /*mix-blend-mode: multiply;*/
+ }
 
-.form {
-    padding: 50px;
-}
+ .bem-vindo {
+     padding: 50px 15px;
+     font-size: 30px;
+     font-weight: bold;
+ }
 
-.distancia-top {
-    margin: 20px;
-}
+ .form {
+     padding: 50px;
+ }
 
-.texto {
-    margin: 20px;
-    border: none;
-    border-bottom: 1px solid black;
-    background-color: transparent;
+ .distancia-top {
+     margin: 20px;
+ }
 
-}
+ .texto {
+     margin: 20px;
+     border: none;
+     border-bottom: 1px solid black;
+     background-color: transparent;
 
-.texto:focus {
-    outline: none;
-    background: none;
-}
+ }
 
-
-
-.entrar {
-    padding: 10px 15px;
-    background-color: #1c2c4c;
-    display: inline-block;
-    border-radius: 15px;
-    color: white;
-
-}
-
-.entrar:hover {
-    transform: scale(1.2);
-}
-
-.separar-botao {
-    display: inline-block;
-    margin: 20px 15px;
-    padding: 15px 10%;
-    border-radius: 10cm;
-    background-color: #1c2c4c;
-    color: white;
-    font-size: medium;
-    font-weight: bold;
-}
-
-div {
-    text-align: center;
-    margin: 15px 15px;
-}
-
-body {
-    background-color: white;
-    overflow-x: hidden;
-    
-}
-
-.escolha {
-    border-radius: none;
-    margin-bottom: 50px;
-}
-
-#rodape {
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-    text-align: center;
-    background-color: #1c2c4c;
-    padding: 15px 15px;
-    color: white;
-}
-
-table {
-    border-collapse: collapse;
-    width: 50%;
-}
-
-th {
-    background-color: #afb4c4;
-    color: #1c2c4c;
-    width: 100%;
-}
-
-th,
-td {
-    padding: 8px;
-    text-align: left;
-    border-bottom: 1px solid #ddd;
-    text-transform: uppercase;
-}
-
-tr:hover {
-    background-color: #f5f5f5;
-}
+ .texto:focus {
+     outline: none;
+     background: none;
+ }
 
 
-.edit:hover {
-    text-decoration: none;
-    text-align: center;
-    color: #1c2c4c;
-    font-size: large;
-    font-weight: 15px;
-}
+
+ .entrar {
+     padding: 10px 15px;
+     background-color: #1c2c4c;
+     display: inline-block;
+     border-radius: 15px;
+     color: white;
+
+ }
+
+ .entrar:hover {
+     transform: scale(1.2);
+ }
+
+ .separar-botao {
+     display: inline-block;
+     margin: 20px 15px;
+     padding: 15px 10%;
+     border-radius: 10cm;
+     background-color: #1c2c4c;
+     color: white;
+     font-size: medium;
+     font-weight: bold;
+ }
+
+ div {
+     text-align: center;
+     margin: 15px 15px;
+ }
+
+ body {
+     background-color: antiquewhite;
+     overflow-x: hidden;
+
+ }
+
+ .escolha {
+     border-radius: none;
+     margin-bottom: 50px;
+ }
+
+ #rodape {
+     position: absolute;
+     bottom: 0;
+     width: 100%;
+     text-align: center;
+     background-color: #1c2c4c;
+     padding: 15px 15px;
+     color: white;
+ }
+
+ table {
+     border-collapse: collapse;
+     width: 50%;
+ }
+
+ th {
+     background-color: #afb4c4;
+     color: #1c2c4c;
+     width: 100%;
+ }
+
+ th,
+ td {
+     padding: 8px;
+     text-align: left;
+     border-bottom: 1px solid #ddd;
+     text-transform: uppercase;
+ }
+
+ tr:hover {
+     background-color: #f5f5f5;
+ }
+
+
+ .edit:hover {
+     text-decoration: none;
+     text-align: center;
+     color: #1c2c4c;
+     font-size: large;
+     font-weight: 15px;
+ }

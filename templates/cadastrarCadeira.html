@@ -13,11 +13,12 @@
     <div id="cadastro">
         <h2>CADASTRANDO CADEIRA</h2>
         <div id="form_frente">
-            <form action="/cadastrarCadeira" method="post" >
-                <label for="cadeira">CADEIRA: </label>
-                <input type="text" name="cadeira" id="cadeira" required
-                    placeholder="Digite a cadeira que vai cadastrar a frequencia" class="separar">
-                <br>
+            <form action="/cadastrarCadeira" method="post">
+                <select name="acessoTabela" class="nomeTabelas">
+                    {% for resultado in list_table %}
+                    <option value="{{resultado}}">{{resultado}}</option>
+                    {% endfor %}
+                </select>
                 <label for="nome ">NOME: </label>
                 <input type="text" name="nome" id="nome" required placeholder="Digite o nome do aluno" class="separar">
                 <br>
