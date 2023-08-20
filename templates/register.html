@@ -15,7 +15,7 @@
             <br>
             {% with messages = get_flashed_messages(category_filter=["error"]) %}
             {% if messages %}
-                <div class="flash-message error">
+                <div class="entrar">
                     {{ messages[0] }}
                 </div>
             {% endif %}
@@ -30,7 +30,7 @@
             {% endif %}
         {% endwith %}
 
-                <div class="login">
+                <div>
                     <p>Preencha os campos a seguir</p>
                     <form class="form" method="POST">
                         <label for="username">Username:</label>

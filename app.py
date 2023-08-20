@@ -1,6 +1,5 @@
-from flask import Flask, render_template, request,redirect,flash,url_for
+from flask import Flask, render_template, request,redirect,flash,session
 import sqlite3
-from flask_login import LoginManager, UserMixin, login_required, login_user
 from passlib.hash import sha256_crypt
 
 
@@ -9,14 +8,6 @@ from passlib.hash import sha256_crypt
 
 app = Flask(__name__)
 app.secret_key = 'ola'
-# def create_table():
-#     conn = sqlite3.connect('login.db')
-#     c = conn.cursor()
-#     c.execute("CREATE TABLE IF NOT EXISTS login (username TEXT, password TEXT)")
-#     conn.commit()
-#     conn.close()
-
-# create_table()
 
 
 #variável global
@@ -55,9 +46,10 @@ def home():
                     return render_template("/professor.html")
                 elif user == 'aluno':
                     return render_template("/aluno.html")
-            
+            else: 
+                flash("USUÁRIO OU SENHA INCORRETOS")
+                return render_template("/index.html")
     return render_template("/index.html")
-
 
 @app.route("/professor", methods = ["GET","POST"])
 def professor():
@@ -113,6 +105,7 @@ def register():
         conn.commit()
         conn.close()
         flash("Cadastro Realizado com Sucesso", "success")
+        
     return render_template("register.html")
 
 
