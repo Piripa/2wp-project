@@ -32,6 +32,7 @@ img {
 
 .form {
     padding: 50px;
+    position: relative;
 }
 
 .distancia-top {

@@ -15,26 +15,28 @@
     </header>
     <h1 class="titulo"> Cadeiras Cadastradas</h1>
     <br>
+        <form>
+            <table>
+                <thead>
+                    <tr>
+                        {% for col in colunas_tabela %}
+                        <th>{{ col }} </th>
+                        {% endfor %}
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for row in dados_tabela %}
+                    <tr>
+                        {% for value in row %}
+                        <td>{{value}}</td>
+                        {% endfor %}
+                    </tr>
+                    {% endfor %}
+                </tbody>
 
-    <table>
-        <thead>
-            <tr>
-                {% for col in colunas_tabela %}
-                <th>{{ col }} </th>
-                {% endfor %}
-            </tr>
-        </thead>
-        <tbody>
-            {% for row in dados_tabela %}
-            <tr>
-                {% for value in row %}
-                <td>{{value}}</td>
-                {% endfor %}
-            </tr>
-            {% endfor %}
-        </tbody>
-
-    </table>
+            </table>
+        </form>
+    
 
     <footer id="rodape">
         <p> &copy;Powered by 2WP</p>

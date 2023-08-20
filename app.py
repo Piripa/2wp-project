@@ -1,11 +1,11 @@
-from flask import Flask, render_template, request,redirect,flash,url_for
+from flask import Flask, render_template, request,redirect,flash,session
 import sqlite3
 from passlib.hash import sha256_crypt
 
 
 
 app = Flask(__name__)
-
+app.secret_key = 'ola'
 
 
 #variável global
@@ -27,10 +27,30 @@ def obter_dados(banco):
 
 @app.route("/" , methods = ["GET","POST"])
 def home():
+    if request.method == "POST":
+        username = request.form.get('username')
+        password = request.form.get('password')
+        conn = sqlite3.connect('login.db')
+        c = conn.cursor()
+        c.execute("SELECT * FROM login WHERE username = ?" , (username,))
+        data = c.fetchone()
+        conn.close()
+        if data:
+            stored_password = data[1]
+            user = data[2]
+
+            if sha256_crypt.verify(password,stored_password):
+                if user =='professor':
+                    return render_template("/professor.html")
+                elif user == 'aluno':
+                    return render_template("/aluno.html")
+            else: 
+                flash("USUÁRIO OU SENHA INCORRETOS")
+                return render_template("/index.html")
     return render_template("/index.html")
 
 
-@app.route("/professor")
+@app.route("/professor", methods = ["GET","POST"])
 def professor():
     return render_template("professor.html")
         
@@ -62,12 +82,30 @@ def frequencia():
     return render_template("frequencia.html", frequencia = frequencia, tabela = tabela) 
 
 
-@app.route('/register', methods = ["GET","POST"])
+@app.route('/register', methods = ["GET", "POST"])
 def register():
-        username = request.form['username']
-        password = sha256_crypt.hash(request.form['password'])
-        return render_template("register.html")
+    if request.method == "POST":
+        username = request.form.get('username')
+        password = sha256_crypt.hash(request.form.get('password'))
+        user = request.form.get('user')
+        conn = sqlite3.connect('login.db')
+        c = conn.cursor()
 
+        #Procura se existe algum usuário já cadastrado no BD
+        c.execute("SELECT * FROM login WHERE username = ?", (username,))
+        existing_user = c.fetchone()
+        if existing_user:
+            conn.close()
+            flash("Usuário já existente", "error")
+            return render_template("register.html")
+        
+        #Caso não exista, ele adiciona
+        c.execute("INSERT INTO login (username, password, user) VALUES (?, ?, ?)", (username, password, user))
+        conn.commit()
+        conn.close()
+        flash("Cadastro Realizado com Sucesso", "success")
+        
+    return render_template("register.html")
 
 
 @app.route('/cadastrarFrequencia',methods = ['POST'])
@@ -123,6 +161,4 @@ def readFrequencia():
     return redirect('/frequencia')
 
 if __name__ in '__name__':
-    db.create_all()
     app.run(debug=True)
-

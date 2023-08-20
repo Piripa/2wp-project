@@ -17,11 +17,16 @@
         <h2 class="bem-vindo">Bem-Vindo!</h2>
         <div class="login">
             <p>Preencha abaixo para prosseguir</p>
-            <form class="form" method="post">
-                {{ form.hidden_tag() }}
-                {{ form.username }}
-                {{ form.password }}
-                {{ form.submit }}
+
+            <form class="form" method="POST">
+                <label for="username">Username: </label>
+                <input type="text" id="username" class="texto" name = "username" required placeholder="Nome de Usuário">
+                <br>
+
+                <label for="password"> Password: </label>
+                <input type="password" id="password" class="texto" name = "password" required placeholder="Senha">
+                <br>                
+                <input type="submit" value="Entrar" class="entrar">
 
             </form>
             <p>Não tem uma conta? Cadastre-se clicando no botão abaixo</p>
@@ -35,13 +40,3 @@
 </body>
 
 </html>
-
-
-
-<!-- <label for="username">Username: </label>
-<input type="text" id="username" class="texto" name = "username">
-<br>
-<label for="password">Password: </label>
-<input type="password" id="password" class="texto" name = "password">
-<br>                
-<input type="submit" value="Entrar" class="entrar"> -->
