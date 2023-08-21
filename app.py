@@ -1,8 +1,7 @@
 from flask import Flask, render_template, request,redirect,flash,session
 import sqlite3
+from flask_login import login_required
 from passlib.hash import sha256_crypt
-
-
 
 app = Flask(__name__)
 app.secret_key = 'ola'
@@ -40,9 +39,9 @@ def home():
             user = data[2]
 
             if sha256_crypt.verify(password,stored_password):
-                if user =='professor':
+                if user =='Professor':
                     return render_template("/professor.html")
-                elif user == 'aluno':
+                elif user == 'Aluno':
                     return render_template("/aluno.html")
             else: 
                 flash("USUÁRIO OU SENHA INCORRETOS")

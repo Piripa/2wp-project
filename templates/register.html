@@ -38,10 +38,13 @@
 
                         <label for="password">Senha:</label>
                         <input type="password" id="password" class="texto" name="password" required placeholder="Senha"><br>
-
-                        <label for="user">Tipo Usuário</label>
-                        <input type="text" id ="user"  class = "texto"  name="user" required placeholder="Aluno/Professor">
-                        <br>
+                        
+                        <label>Tipo de Usuário</label>
+                        <input type="radio" id="professor" name="user" value="Professor" required>
+                        <label for="professor">Professor</label>
+                        <input type="radio" id="aluno" name="user" value="Aluno" required>
+                        <label for="aluno">Aluno</label>
+                        <br><br><br>
 
                         <input type="submit" class="entrar" value="Cadastrar">
                     </form>
