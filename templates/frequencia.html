@@ -18,7 +18,7 @@
         <form action="/selecionarTabela" method="post">
             {% for resultado in list_table %}
             <label>
-                <input type="checkbox" name="nome" value="{{resultado}}">
+                <input type="radio" name="nome" value="{{resultado}}">
                 {{resultado}}
             </label>
             {% endfor %}
@@ -46,7 +46,7 @@
                     <input type="hidden" name="dado" value="{{i[0]}}">
                     <li id="atributos">NOME: {{i[0]}}</li>
                     <li id="atributos">MATRICULA: {{i[1]}}</li>
-                    <li id="atributos">HORARIO: {{i[2]}}</li>
+                    <li id="atributos">CONDIÇÃO: {{i[2]}}</li>
                 </ul>
                 <button type="submit" class="excluir">EXCLUIR</button>
             </form>
