@@ -1,0 +1,61 @@
+@import url(/static/style.css);
+@import url(/static/reset.css);
+
+body{
+    background-color: antiquewhite;
+}
+
+/* Container styles */
+.selecionarTabela {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.selecionarTabela select {
+    padding: 10px;
+    font-size: 16px;
+}
+
+
+/* Alunos list styles */
+ul {
+    list-style: none;
+    margin: 10px 0;
+}
+form.listagem{
+    height: 400px;
+    overflow-y:auto;
+}
+
+#atributos {
+    border-style: solid;
+    border-width: 2px;
+    border-color: black;
+    background-color: #1c2c4c;
+    display: block;
+    color: white;
+    text-align: left;
+    width: 90%;
+    position: relative;
+    margin-left: 1%;
+    
+    
+}
+form .checkbox-label{
+    
+    position: absolute;
+    display: inline-block;
+    margin-left: 42%;
+    margin-top: -2.5%;
+}
+
+form #confirmar{
+
+    position: absolute;
+    display: inline-block;
+    margin-left: 34%;
+}
+
+
+
+

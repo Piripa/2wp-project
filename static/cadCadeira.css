@@ -1,0 +1,42 @@
+@import url(/static/style.css);
+@import url(/static/reset.css);
+
+#cadastro{
+    height: 79vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 10px;
+}
+#cadastro h2{
+    font-size: 30px;
+    font-weight: bold;
+    margin-bottom: 40px;
+    
+}
+#form_frente form{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    background-color: #1c2c4c;
+    padding: 10px 50px;
+    border-radius: 5px;
+    color: white;
+
+
+}
+.entrar{
+    margin-top: 5px;
+}
+.nomeTabelas{
+    padding: 2px 45px;
+    background-color: white;
+    color: #1c2c4c;
+    font-size: 10px;
+    font-weight: bold;
+    
+}
+
+

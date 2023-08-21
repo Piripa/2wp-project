@@ -1,93 +1,111 @@
 @import url(/static/style.css);
 
-.layoutTopo{
-    padding:  10px;
+.layoutTopo {
+    padding: 10px;
     text-align: center;
     font-size: 20px;
     font-weight: bold;
     background-color: #1c2c4c;
     color: white;
     border-style: solid;
-    border-width: 10px;
+    border-width: 1px;
     border-color: white;
+
+
 }
 
-.layoutRede{
+
+.cadFreque {
+    display: block;
     position: absolute;
-    display: inline-block;
-    margin: 1.5% 0 25% 25%;
+    width: 200px;
+    height: 100px;
+    margin: 1px 100% 0 0;
     background-color: #1c2c4c;
     color: white;
-}
-
-#form_fundo
-{
-    background-color: #1c2c4c;
-    position: absolute;;
-    color: white;
+    font-size: 25px;
+    font-weight: bold;
     border-radius: 5px;
-    text-align: center;
-    padding: 10px;
-    margin: 10px ;
-    margin: 0;
-    
-
-   
 }
-.form{
+
+.cadFreque:hover {
+    transform: scale(1.1)
+}
+.cadAlunos{
+    display: block;
+    position: absolute;
+    width: 200px;
+    height: 100px;
+    margin: 7% 100% 0 0;;
+    background-color: #1c2c4c;
+    color: white;
+    font-size: 25px;
+    font-weight: bold;
+    border-radius: 5px;
+
+}
+.cadAlunos:hover {
+    transform: scale(1.1)
+}
+
+
+.selecionarTabela form {
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    flex-direction: column;
+    background-color: #1c2c4c;
+    color: white;
+    padding: 10px 100px;
+    border-radius: 5px;
+    width: 10px;
+    height: 250px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+
+}
+
+#form_fundo_visual {
+    display: inline-block;
+    position: relative;
+    display: inline-block;
+    margin: -19% 2% 5% 17%;
+    width: 80%;
+    height: 469px;
+    background-color: #1c2c4c;
+    color: white;
     overflow-y: scroll;
 }
-.separar{
-    margin: 5px;  
-}
-#btn_cadastro{
-    margin: 20px;
-    padding: 5px;
-    border-radius: 5px;
-    font-size: 30px;
-    font-weight: bold;
-    border-radius: 5cm;
-    background-color: white;
 
-}
-.visualFundo{
-    width: 100px;
-    height: 200px;
-    
-}
-#atributos{
+#atributos {
     border-style: solid;
     border-width: 2px;
     border-color: black;
-    background-color:#1c2c4c;
+    background-color: #1c2c4c;
     display: block;
-    width:75%;
-    margin-left: 25%;
-    margin-top: 0;
-    margin-bottom: 2px;
     color: white;
     text-align: left;
-    
 }
-#atributos.visu{
-    padding: 10px;
+
+#atributos.visu {
     text-align: center;
     text-transform: uppercase;
     font-size: 15px;
     font-weight: bold;
 }
-.btn-excluir{
-    margin-right:30%;
-    display: inline-block;
-    padding: 0  30px;
-    border-radius: 5cm;
-}
 
-#embaixo {
-    position: absolute;
-    margin: 25% 25% 0 0;
+.entrar{
+    margin-top: 10px;
 }
-#form_fundo_visual{
-    height: 20px;
-    width: 200px;
+.excluir{
+    display: inline-block;
+    position: relative;
+    margin-left: -94%;
+    border-radius: 5px;
+    color: white;
+    background-color: #1c2c4c;
 }
+.excluir:hover{
+    transform: scale(1.2);
+
+} 

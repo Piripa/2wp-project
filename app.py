@@ -1,7 +1,8 @@
 from flask import Flask, render_template, request,redirect,flash,url_for
 from flask_sqlalchemy import SQLAlchemy
 import sqlite3
-
+import pandas as pd
+from datetime import date
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///estudantes.db'
 
@@ -16,8 +17,13 @@ class Estudante(db.Model):
         self.nome = nome
         self.senha = senha
 
-#variável global
+#variável global##################
 tabela = 'Algoritmo'
+##################################
+def data():
+    data_atual = date.today()
+    dataTexto = data_atual.strftime('%d_%m_%Y')
+    return dataTexto
 
 def obter_dados(banco):
     dados = sqlite3.connect(banco)
@@ -72,10 +78,16 @@ def frequencia():
     cursor.execute(f'SELECT * FROM {tabela}')
     frequencia = cursor.fetchall()
     dados.commit()
+    query = "SELECT name FROM sqlite_master WHERE type='table';"
+    data = pd.read_sql(query,dados)
+    list_table = []
+    for coluna in data.columns:
+        list_table = data[coluna].tolist()
+    #retirando a tabela que é criada automaticamente pelo browser sqlite3
+    list_table.remove('sqlite_sequence')
     cursor.close()
     dados.close()
-    return render_template("frequencia.html", frequencia = frequencia, tabela = tabela) 
-
+    return render_template("frequencia.html", frequencia = frequencia, list_table = list_table, tabela = tabela) 
 
 @app.route('/register')
 def register():
@@ -116,12 +128,12 @@ def delete(id):
 def login():
     return render_template("login.html")
 
-@app.route('/cadastrarFrequencia',methods = ['POST'])
+@app.route('/cadastrarCadeira',methods = ['POST'])
 def cadastrarFrequencia():
     global tabela
     dados = sqlite3.connect('frequencia.db')
     cursor = dados.cursor()
-    frequencia = request.form.get('cadeira')
+    frequencia = request.form.get('acessoTabela')
     tabela = frequencia
     nome = request.form.get('nome')
     matricula = request.form.get('matricula')
@@ -139,7 +151,6 @@ def cadastrarFrequencia():
     dados.commit()
     cursor.close()
     dados.close()
-
     return redirect('/frequencia')
 
 @app.route("/excluirFrequencia", methods = ['POST'])
@@ -154,18 +165,85 @@ def excluirFrequencia():
     dados.close()
     return redirect('/frequencia')  
 
-@app.route("/readFrequencia", methods = ['POST'])
-def readFrequencia():
+@app.route("/paginaCadCadeiras", methods= ['POST'])
+def paginaCadCadeiras():
     global tabela
-    read = request.form.get('tabelaFre')
     dados = sqlite3.connect('frequencia.db')
     cursor = dados.cursor()
-    verificar = f"SELECT name FROM sqlite_master WHERE type='table' AND name='{read}'"
-    cursor.execute(verificar)
-    resultado = cursor.fetchone()
-    if  resultado:
-        tabela = read
-        redirect('/frequencia')
+    cursor.execute(f'SELECT * FROM {tabela}')
+    frequencia = cursor.fetchall()
+    dados.commit()
+    query = "SELECT name FROM sqlite_master WHERE type='table';"
+    data = pd.read_sql(query,dados)
+    list_table = []
+    for coluna in data.columns:
+        list_table = data[coluna].tolist()
+    #retirando a tabela que é criada automaticamente pelo browser sqlite3
+    list_table.remove('sqlite_sequence')
+    cursor.close()
+    dados.close()
+    return render_template("cadastrarCadeira.html", list_table=list_table)
+
+# @app.route("/irPageCadFreq", methods =['POST'])
+# def irPageCadFreq():
+#     return redirect('/frequencia')
+
+@app.route("/paginaCadFreq")
+def paginaCadFreq():
+   global tabela
+   dados = sqlite3.connect('frequencia.db')
+   cursor = dados.cursor()
+   cursor.execute(f"SELECT * FROM {tabela};")
+   alunos = cursor.fetchall()
+   dados.commit()
+   #-------------------Abaixo: Lendo nomes das tabelas-------------------
+   query = "SELECT name FROM sqlite_master WHERE type='table';"
+   data = pd.read_sql(query,dados)
+   list_table = []
+   for coluna in data.columns:
+       list_table = data[coluna].tolist()
+   list_table.remove('sqlite_sequence')
+   cursor.close()
+   dados.close
+   return render_template("cadastroFrequencia.html", list_table = list_table, alunos = alunos)
+
+@app.route("/selecionarTabela", methods = ['POST'])
+def selecionarTabela():
+    global tabela
+    pesquisar = request.form.get('nome')
+    tabela = pesquisar
+    return redirect('/frequencia')
+
+@app.route("/combobox", methods = ['GET','POST'])
+def combobox():
+    global tabela
+    pesquisar = request.form.get('acessoTabela')
+    tabela = pesquisar
+    return redirect('/paginaCadFreq')
+
+@app.route("/presenca", methods = ['GET','POST'])
+def presenca():
+    global tabela
+    if request.method== "POST":
+        list_presenca_comp = request.form.getlist('presente')
+        auxiliar = ''
+        list_presenca = []
+        for i in list_presenca_comp:
+            auxiliar = i
+            list_presenca.append(auxiliar.split())
+        print(list_presenca)
+        dados = sqlite3.connect('presenca.db')
+        cursor = dados.cursor()
+        tabela_for_frequencia = tabela+"_"+data()
+        cursor.execute('CREATE TABLE IF NOT EXISTS {} (nome TEXT NOT NULL, matricula TEXT NOT NULL, presenca TEXT);'.format(tabela_for_frequencia))
+        for i in list_presenca:
+            nome = i[0]
+            matricula = i[1]
+            estar_presente = i[3]
+            cursor.execute(f"INSERT INTO {tabela_for_frequencia} VALUES ('{nome}','{matricula}','{estar_presente}')")
+        dados.commit()
+        cursor.close()
+        dados.close()
     return redirect('/frequencia')
 
 if __name__ in '__name__':

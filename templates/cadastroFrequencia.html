@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/cadFrequencia.css">
+    <title>Cadastro da Frequencia</title>
+</head>
+
+<body>
+    <header>
+        <img class="center" src="/static/logo.png">
+    </header>
+    <div class="selecionarTabela">
+        <form action="/combobox" method="post">
+            <select name="acessoTabela">
+                {% for resultado in list_table %}
+                <option value="{{resultado}}">{{resultado}}</option>
+                {% endfor %}
+            </select>
+            <button type="submit" class="entrar">SELECIONAR</button>
+        </form>
+    </div>
+    <div>
+        {%if alunos%}
+        {%for aluno in alunos%}
+        <form action="/presenca" method="post" class="listagem">
+            <ul>
+                <li id="atributos">NOME: {{aluno[0]}}</li>
+                <li id="atributos">MATRICULA: {{aluno[1]}}</li>
+            </ul>
+            <div>
+            <label class="checkbox-label" >
+                <input type="checkbox" class="checkbox-input"name="presente" value="{%for i in aluno%} {{i}} {%endfor%}Presente">
+                PRESENTE
+            </label>
+            </div>
+        {%endfor%}
+        <br>
+        <button type="submit" class="entrar" id="confirmar">CONFIRMAR</button>
+        </form>
+        {%else%}
+        <p>Não existe alunos cadastrados nessa cadeira</p>
+        {%endif%}
+    </div>
+    
+    <footer id="rodape">
+        <p> &copy;Powered by 2WP</p>
+    </footer>
+</body>
+
+</html>
