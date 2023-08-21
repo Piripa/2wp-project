@@ -2,7 +2,6 @@ from flask import Flask, render_template, request,redirect,flash,session
 import sqlite3
 import pandas as pd
 from datetime import date
-from flask_login import login_required
 from passlib.hash import sha256_crypt
 
 app = Flask(__name__)
