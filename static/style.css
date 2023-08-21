@@ -27,16 +27,15 @@
      /*Tira o fundo da img*/
      /*mix-blend-mode: multiply;*/
  }
-
  .bem-vindo {
      padding: 50px 15px;
      font-size: 30px;
      font-weight: bold;
  }
-
- .form {
-     padding: 50px;
- }
+.form {
+    padding: 50px;
+    position: relative;
+}
 
  .distancia-top {
      margin: 20px;

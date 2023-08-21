@@ -1,21 +1,13 @@
-from flask import Flask, render_template, request,redirect,flash,url_for
-from flask_sqlalchemy import SQLAlchemy
+from flask import Flask, render_template, request,redirect,flash,session
 import sqlite3
 import pandas as pd
 from datetime import date
+from flask_login import login_required
+from passlib.hash import sha256_crypt
+
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///estudantes.db'
+app.secret_key = 'ola'
 
-db = SQLAlchemy(app)
-
-class Estudante(db.Model):
-    id = db.Column('id',db.Integer,primary_key = True,autoincrement = True)
-    nome = db.Column(db.String(150))
-    senha = db.Column(db.String(150))
-
-    def __init__(self,nome,senha):
-        self.nome = nome
-        self.senha = senha
 
 #variável global##################
 tabela = 'Algoritmo'
@@ -28,6 +20,7 @@ def data():
 def obter_dados(banco):
     dados = sqlite3.connect(banco)
     cursor = dados.cursor()
+
     cursor.execute("SELECT * FROM cadeiras")
     dados_tabela = cursor.fetchall()
 
@@ -40,25 +33,37 @@ def obter_dados(banco):
 
 @app.route("/" , methods = ["GET","POST"])
 def home():
-
     if request.method == "POST":
-        nome = request.form.get("nome")
-        senha = request.form.get("senha")
-        if nome == "professor":
-            #request.form["professor"]
-            return redirect("/professor")
-        elif nome == "aluno":
-            #request.form["aluno"]
-            return redirect("/aluno")
-    return render_template("index.html")
+        username = request.form.get('username')
+        password = request.form.get('password')
+        conn = sqlite3.connect('login.db')
+        c = conn.cursor()
+        c.execute("SELECT * FROM login WHERE username = ?" , (username,))
+        data = c.fetchone()
+        conn.close()
+        if data:
+            stored_password = data[1]
+            user = data[2]
 
-@app.route("/professor")
+            if sha256_crypt.verify(password,stored_password):
+                if user =='Professor':
+                    return render_template("/professor.html")
+                elif user == 'Aluno':
+                    return render_template("/aluno.html")
+            else: 
+                flash("USUÁRIO OU SENHA INCORRETOS")
+                return render_template("/index.html")
+    return render_template("/index.html")
+
+
+@app.route("/professor", methods = ["GET","POST"])
 def professor():
     return render_template("professor.html")
         
 @app.route("/aluno")
 def aluno():
     return render_template("aluno.html")
+
 
 @app.route("/cadeiras")
 def cadeiras():
@@ -89,44 +94,31 @@ def frequencia():
     dados.close()
     return render_template("frequencia.html", frequencia = frequencia, list_table = list_table, tabela = tabela) 
 
-@app.route('/register')
+@app.route('/register', methods = ["GET", "POST"])
 def register():
-    db.create_all()
-    estudantes = Estudante.query.all()
-    return render_template("register.html", estudantes = estudantes)
-
-@app.route('/add', methods = ["GET","POST"])
-def add():
-    if request.method== "POST":
-        estudante = Estudante(request.form['nome'],request.form['senha'])
-        db.session.add(estudante)
-        db.session.commit()
-        return redirect(url_for('register'))
-    return render_template("add.html")
-
-
-@app.route('/edit/<int:id>', methods = ["GET", "POST"])
-def edit(id):
-    estudante = Estudante.query.get(id)
     if request.method == "POST":
-        estudante.nome = request.form['nome']
-        estudante.senha = request.form['senha']
-        db.session.commit()
-        return redirect(url_for('register'))
-    return render_template("edit.html", estudante = estudante)
+        username = request.form.get('username')
+        password = sha256_crypt.hash(request.form.get('password'))
+        user = request.form.get('user')
+        conn = sqlite3.connect('login.db')
+        c = conn.cursor()
 
+        #Procura se existe algum usuário já cadastrado no BD
+        c.execute("SELECT * FROM login WHERE username = ?", (username,))
+        existing_user = c.fetchone()
+        if existing_user:
+            conn.close()
+            flash("Usuário já existente", "error")
+            return render_template("register.html")
+        
+        #Caso não exista, ele adiciona
+        c.execute("INSERT INTO login (username, password, user) VALUES (?, ?, ?)", (username, password, user))
+        conn.commit()
+        conn.close()
+        flash("Cadastro Realizado com Sucesso", "success")
+        
+    return render_template("register.html")
 
-@app.route('/delete/<int:id>', methods = ["GET", "POST"])
-def delete(id):
-    estudante =Estudante.query.get(id)
-    db.session.delete(estudante)
-    db.session.commit()
-
-    return redirect(url_for('register'))
-
-@app.route('/login')
-def login():
-    return render_template("login.html")
 
 @app.route('/cadastrarCadeira',methods = ['POST'])
 def cadastrarFrequencia():
@@ -248,4 +240,3 @@ def presenca():
 
 if __name__ in '__name__':
     app.run(debug=True)
-
