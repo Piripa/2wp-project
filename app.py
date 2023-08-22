@@ -2,7 +2,6 @@ from flask import Flask, render_template, request,redirect,flash,session
 import sqlite3
 import pandas as pd
 from datetime import date
-from flask_login import login_required
 from passlib.hash import sha256_crypt
 
 app = Flask(__name__)
@@ -11,6 +10,7 @@ app.secret_key = 'ola'
 
 #variável global##################
 tabela = 'Algoritmo'
+tabelaFrequencia = ''
 ##################################
 def data():
     data_atual = date.today()
@@ -78,21 +78,25 @@ def cadeirasprofessor():
 @app.route('/frequencia')
 def frequencia():
     global tabela
-    dados = sqlite3.connect('frequencia.db')
+    global tabelaFrequencia
+    dados = sqlite3.connect('presenca.db')
     cursor = dados.cursor()
-    cursor.execute(f'SELECT * FROM {tabela}')
-    frequencia = cursor.fetchall()
-    dados.commit()
+    try:
+        cursor.execute(f'SELECT * FROM {tabelaFrequencia}')
+        frequencia = cursor.fetchall()
+        dados.commit()
+    except:
+        frequencia = False
     query = "SELECT name FROM sqlite_master WHERE type='table';"
     data = pd.read_sql(query,dados)
     list_table = []
     for coluna in data.columns:
         list_table = data[coluna].tolist()
     #retirando a tabela que é criada automaticamente pelo browser sqlite3
-    list_table.remove('sqlite_sequence')
+    #list_table.remove('sqlite_sequence')
     cursor.close()
     dados.close()
-    return render_template("frequencia.html", frequencia = frequencia, list_table = list_table, tabela = tabela) 
+    return render_template("frequencia.html", frequencia = frequencia, list_table = list_table, tabela = tabelaFrequencia) 
 
 @app.route('/register', methods = ["GET", "POST"])
 def register():
@@ -110,7 +114,6 @@ def register():
             conn.close()
             flash("Usuário já existente", "error")
             return render_template("register.html")
-        
         #Caso não exista, ele adiciona
         c.execute("INSERT INTO login (username, password, user) VALUES (?, ?, ?)", (username, password, user))
         conn.commit()
@@ -147,11 +150,11 @@ def cadastrarFrequencia():
 
 @app.route("/excluirFrequencia", methods = ['POST'])
 def excluirFrequencia():
-    global tabela
-    dados = sqlite3.connect('frequencia.db')
+    global tabelaFrequencia
+    dados = sqlite3.connect('presenca.db')
     cursor = dados.cursor()
     dadoId = request.form.get('dado')
-    cursor.execute(f"DELETE FROM {tabela} WHERE nome= '{dadoId}';")
+    cursor.execute(f"DELETE FROM {tabelaFrequencia} WHERE nome= '{dadoId}';")
     dados.commit()
     cursor.close()
     dados.close()
@@ -162,9 +165,6 @@ def paginaCadCadeiras():
     global tabela
     dados = sqlite3.connect('frequencia.db')
     cursor = dados.cursor()
-    cursor.execute(f'SELECT * FROM {tabela}')
-    frequencia = cursor.fetchall()
-    dados.commit()
     query = "SELECT name FROM sqlite_master WHERE type='table';"
     data = pd.read_sql(query,dados)
     list_table = []
@@ -175,10 +175,6 @@ def paginaCadCadeiras():
     cursor.close()
     dados.close()
     return render_template("cadastrarCadeira.html", list_table=list_table)
-
-# @app.route("/irPageCadFreq", methods =['POST'])
-# def irPageCadFreq():
-#     return redirect('/frequencia')
 
 @app.route("/paginaCadFreq")
 def paginaCadFreq():
@@ -201,9 +197,9 @@ def paginaCadFreq():
 
 @app.route("/selecionarTabela", methods = ['POST'])
 def selecionarTabela():
-    global tabela
+    global tabelaFrequencia
     pesquisar = request.form.get('nome')
-    tabela = pesquisar
+    tabelaFrequencia = pesquisar
     return redirect('/frequencia')
 
 @app.route("/combobox", methods = ['GET','POST'])
