@@ -10,7 +10,7 @@ app.secret_key = 'ola'
 
 #variável global##################
 tabela = 'Algoritmo'
-tabelaFrequencia = ' '
+tabelaFrequencia = ''
 ##################################
 def data():
     data_atual = date.today()
@@ -175,8 +175,6 @@ def paginaCadCadeiras():
     cursor.close()
     dados.close()
     return render_template("cadastrarCadeira.html", list_table=list_table)
-
-
 
 @app.route("/paginaCadFreq")
 def paginaCadFreq():
