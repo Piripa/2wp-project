@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/static/style.css">
+    <link rel="stylesheet" href="/static/tabelascadeiras.css">
     <link rel="stylesheet" href="/static/reset.css">
     <title>Cadeiras</title>
 </head>
@@ -19,9 +19,9 @@
     <h1 class="titulo"> Cadeiras Cadastradas</h1>
     <br>
     <div id="form_fundo_visual">
-        <form>
-            <table>
-                <thead>
+        <form class="espacamentoform">
+            <table class="espacamentotable">
+                <thead class="espacamentothead">
                     <tr>
                         {% for col in colunas_tabela %}
                         <th>{{ col }} </th>
@@ -37,7 +37,6 @@
                     </tr>
                     {% endfor %}
                 </tbody>
-
             </table>
             <br>
         </form>
