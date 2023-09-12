@@ -1,15 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/static/cadCadeira.css">
     <title>Cadastro da Frequencia</title>
 </head>
+
 <body>
-<header>
-    <img class="center" src="/static/logo.png">
-</header>
+    <header>
+        <form action="/cadeirasprofessor">
+            <button type="submit" class="entrar2">Voltar</button>
+        </form>
+        <img class="center" src="/static/logo.png">
+    </header>
     <div id="cadastro">
         <h2>CADASTRANDO CADEIRA</h2>
         <div id="form_frente">
@@ -30,12 +35,14 @@
                 <input type="text" name="horario" id="horario" placeholder="Digite o horario da frequencia"
                     class="separar">
                 <br>
-                <button type="submit" class="entrar">CADASTRAR </button >
+                <button type="submit" class="entrar">CADASTRAR </button>
             </form>
         </div>
     </div>
-<footer id="rodape">
-    <p> &copy;Powered by 2WP</p>
-</footer>
+
+    <footer id="rodape">
+        <p> &copy;Powered by 2WP</p>
+    </footer>
 </body>
+
 </html>

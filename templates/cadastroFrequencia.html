@@ -10,6 +10,9 @@
 
 <body>
     <header>
+        <form action="/frequencia">
+            <button type="submit" class="entrar2">Voltar</button>
+        </form>
         <img class="center" src="/static/logo.png">
     </header>
     <div class="selecionarTabela">
@@ -31,20 +34,21 @@
                 <li id="atributos">MATRICULA: {{aluno[1]}}</li>
             </ul>
             <div>
-            <label class="checkbox-label" >
-                <input type="checkbox" class="checkbox-input"name="presente" value="{%for i in aluno%} {{i}} {%endfor%}Presente">
-                PRESENTE
-            </label>
+                <label class="checkbox-label">
+                    <input type="checkbox" class="checkbox-input" name="presente"
+                        value="{%for i in aluno%} {{i}} {%endfor%}Presente">
+                    PRESENTE
+                </label>
             </div>
-        {%endfor%}
-        <br>
-        <button type="submit" class="entrar" id="confirmar">CONFIRMAR</button>
+            {%endfor%}
+            <br>
+            <button type="submit" class="entrar" id="confirmar">CONFIRMAR</button>
         </form>
         {%else%}
         <p>Não existe alunos cadastrados nessa cadeira</p>
         {%endif%}
     </div>
-    
+
     <footer id="rodape">
         <p> &copy;Powered by 2WP</p>
     </footer>

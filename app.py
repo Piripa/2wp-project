@@ -8,10 +8,10 @@ app = Flask(__name__)
 app.secret_key = 'ola'
 
 
-#variável global##################
+#   variável global
 tabela = 'Algoritmo'
 tabelaFrequencia = ''
-##################################
+
 def data():
     data_atual = date.today()
     dataTexto = data_atual.strftime('%d_%m_%Y')
@@ -92,8 +92,6 @@ def frequencia():
     list_table = []
     for coluna in data.columns:
         list_table = data[coluna].tolist()
-    #retirando a tabela que é criada automaticamente pelo browser sqlite3
-    #list_table.remove('sqlite_sequence')
     cursor.close()
     dados.close()
     return render_template("frequencia.html", frequencia = frequencia, list_table = list_table, tabela = tabelaFrequencia) 
@@ -146,7 +144,7 @@ def cadastrarFrequencia():
     dados.commit()
     cursor.close()
     dados.close()
-    return redirect('/frequencia')
+    return redirect('/cadeirasprofessor')
 
 @app.route("/excluirFrequencia", methods = ['POST'])
 def excluirFrequencia():

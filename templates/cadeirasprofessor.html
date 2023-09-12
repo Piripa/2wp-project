@@ -11,10 +11,14 @@
 
 <body>
     <header>
+        <form action="/professor">
+            <button type="submit" class="entrar2">Voltar</button>
+        </form>
         <img class="center" src="/static/logo.png">
     </header>
     <h1 class="titulo"> Cadeiras Cadastradas</h1>
     <br>
+    <div id="form_fundo_visual">
         <form>
             <table>
                 <thead>
@@ -35,8 +39,17 @@
                 </tbody>
 
             </table>
+            <br>
         </form>
-    
+
+    </div>
+
+    <div>
+        <form action="/paginaCadCadeiras" method="post">
+            <button type="submit" class="entrar">CADASTRAR ALUNO NA CADEIRA</button>
+        </form>
+    </div>
+    <br>
 
     <footer id="rodape">
         <p> &copy;Powered by 2WP</p>

@@ -11,6 +11,9 @@
 
 <body>
     <header>
+        <form action="/professor">
+            <button type="submit" class="entrar2">Voltar</button>
+        </form>
         <img class="center" src="/static/logo.png">
     </header>
     <h1 class="layoutTopo">FREQUÊNCIA</h1>
@@ -26,16 +29,10 @@
         </form>
     </div>
     <div>
-        <form action="/paginaCadCadeiras" method="post">
-            <button type="submit" class="cadFreque">CADASTRAR CADEIRA</button>
-        </form>
-    </div>
-    <div>
         <form action="/paginaCadFreq">
-            <button type="submit" class="cadAlunos">CADASTRAR ALUNOS</button>
+            <button type="submit" class="cadAlunos">CADASTRAR FREQUÊNCIA</button>
         </form>
     </div>
-
     <div id="form_fundo_visual">
         <h2 id="atributos" class="visu">{{tabela}}</h2>
         <div class="visualFundo">
@@ -56,6 +53,7 @@
             {%endif%}
         </div>
     </div>
+
     <footer id="rodape">
         <p> &copy;Powered by 2WP</p>
     </footer>
