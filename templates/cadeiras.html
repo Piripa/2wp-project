@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/static/style.css">
+    <link rel="stylesheet" href="/static/tabelascadeiras.css">
     <link rel="stylesheet" href="/static/reset.css">
     <title>Aluno</title>
 </head>
@@ -12,31 +12,34 @@
 <body>
     <header>
         <img class="center" src="/static/logo.png">
+        <div>
+            <form action="/aluno">
+                <button type="submit" class="entrar">Voltar</button>
+            </form>
+        </div>
     </header>
     <h1 class="titulo">Dados das Cadeiras</h1>
-    <table>
-        <thead>
-            <tr>
-                {% for col in colunas_tabela %}
-                <th>{{ col }}</th>
+    <form class="espacamentoform">
+        <table class="espacamentotable">
+            <thead class="espacamentothead">
+                <tr>
+                    {% for col in colunas_tabela %}
+                    <th>{{ col }}</th>
+                    {% endfor %}
+                </tr>
+            </thead>
+            <tbody>
+                {% for row in dados_tabela %}
+                <tr>
+                    {% for value in row %}
+                    <td>{{ value }}</td>
+                    {% endfor %}
+                </tr>
                 {% endfor %}
-            </tr>
-        </thead>
-        <tbody>
-            {% for row in dados_tabela %}
-            <tr>
-                {% for value in row %}
-                <td>{{ value }}</td>
-                {% endfor %}
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-    <div>
-        <form action="/aluno">
-            <button type="submit" class="entrar">Voltar</button>
-        </form>
-    </div>
+            </tbody>
+        </table>
+    </form>
+
     <footer id="rodape">
         <p> &copy;Powered by 2WP</p>
     </footer>

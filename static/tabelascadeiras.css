@@ -1,0 +1,58 @@
+@import url(/static/style.css);
+
+/* Estilo para o título */
+.titulo {
+    font-size: 24px;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 20px;
+    border: 2px solid white;
+    background-color: #1c2c4c;
+    color: white;
+}
+
+/* Estilo para a tabela */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    border: 1px solid #ccc;
+}
+
+/* Estilo para cabeçalho da tabela */
+thead {
+    color: white;
+    background-color: #1c2c4c;
+}
+
+th {
+    padding: 10px;
+    text-align: left;
+    border: 1px solid #ccc;
+}
+
+/* Estilo para as células da tabela */
+td {
+    padding: 10px;
+    border: 1px solid black;
+}
+
+/* Estilo para linhas ímpares da tabela */
+tbody {
+    background-color: white;
+}
+.espacamentoform{
+    
+    width: 90%;
+    margin-left: 5%;
+}
+
+.espacamentotable{
+    border: 2px solid black;
+}
+.espacamentothead{
+    border: 1px solid black;
+}
+.entrar{
+    position: absolute;
+    margin-left: 29%;
+}

@@ -147,10 +147,6 @@
      text-transform: uppercase;
  }
 
- tr:hover {
-     background-color: beige;
- }
-
 
  .edit:hover {
      text-decoration: none;
